@@ -148,7 +148,7 @@ int CBounceAction::run()
 	BncMessage.s_Ctrl+=temppoint;
 	BncMessage.s_Ctrl+="\001MSGID: ";
 	char tempmsgid[36];
-	sprintf(tempmsgid,"%i:%i/%i.%i 474747FF", BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point);
+	sprintf(tempmsgid,"%i:%i/%i.%i %8lx", BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point, time(NULL));
 	BncMessage.s_Ctrl+=tempmsgid;
 		/* message text */
 	BncMessage.s_MsgText=s_BounceText;
@@ -265,8 +265,62 @@ int CPackmailAction::run()
 	logstr+=viaaddr;
 	log->add(2, logstr);
 	pkt.create();
+	pkt.Message.d_Attr |= MSGSENT;
+	pkt.Message.Write();
 	pkt.Message.Close();
 	return 0;
+}
+
+int CMovemailAction::run()
+{
+        CPkt pkt;
+        string fromnode, tonode, passwd, dir;
+        string temp=param;
+        while (temp[0]==' ') temp.erase(0,1);
+        do
+        {
+           fromnode+=temp[0];
+           temp.erase(0,1);
+        } while (temp[0]!=' ');
+        while (temp[0]==' ') temp.erase(0,1);
+        do
+        {
+           tonode+=temp[0];
+           temp.erase(0,1);
+        } while (temp[0]!=' ');
+        while(temp[0]==' ') temp.erase(0,1);
+        do
+        {
+           dir+=temp[0];
+           temp.erase(0,1);
+        } while (temp[0]!=' ');
+
+        passwd=temp;
+
+        pkt.fromNode=const_cast<char*>(fromnode.c_str());
+        pkt.toNode=const_cast<char*>(tonode.c_str());
+        pkt.password=passwd;
+	pkt.dir=dir;
+        pkt.Message.Open(msgnum, Area);
+        char taddr[20];
+        char faddr[20];
+        char viaaddr[20];
+        sprintf(faddr, "%i:%i/%i.%i",
+                pkt.Message.F_From.zone, pkt.Message.F_From.net, pkt.Message.F_From.node, pkt.Message.F_From.point);        sprintf(taddr, "%i:%i/%i.%i",
+                        pkt.Message.F_To.zone, pkt.Message.F_To.net, pkt.Message.F_To.node, pkt.Message.F_To.point);        sprintf(viaaddr, "%i:%i/%i.%i",
+                        pkt.toNode.zone, pkt.toNode.net, pkt.toNode.node, pkt.toNode.point);
+        string logstr="Packed Message from ";
+        logstr+=faddr;
+        logstr+=" to ";
+        logstr+= taddr;
+        logstr+=" via ";
+        logstr+=viaaddr;
+        log->add(2, logstr);
+        pkt.create();
+        pkt.Message.d_Attr |= MSGSENT;
+        pkt.Message.Write();
+        pkt.Message.Close();
+        return 0;
 }
 
 int CDisplayAction::run()
