@@ -28,4 +28,7 @@ release: $(OBJS)
 	$(CC) $(OBJS) -l$(SMAPI) -s -o lxtrack
 
 clean:
-	rm lxtrack lxtdbg *.o
+	rm *.o 
+
+distclean:
+	rm *.o core lxtdbg lxtrack

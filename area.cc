@@ -108,6 +108,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
    CMask actualMask;
    int num=1;
    int result;
+   vector<int> matches;
    for (unsigned int i=1;i<i_msgNum+1;i++)
    {
        result=Message.Open(i, a_Area);
@@ -121,7 +122,14 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 	  /*------------ scan for matching mask ---------------*/
 	  if (M_ScanFor[j].M_Mask==actualMask) 
     	  {
-   	     M_ScanFor[j].M_Mask.i_match.push_back(i);
+	     
+             if (0==1)  // FIX: add searching code... 
+                continue;
+             else  
+                matches.push_back(i);
+             
+	     /* TODO: write code to check, if there was already a hit and continue(); if yes */
+              
 	     /*-------- execute associated actions ------------*/
 	     for (int k=M_ScanFor[j].firstAction; k<M_ScanFor[j].lastAction+1;k++)
              {
@@ -239,6 +247,10 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		    CSemaphoreAction TempAction;
 		    TempAction.param=RestParam;
 	            TempAction.run();
+		}
+		if (type=="ignore")
+		{
+		    continue;
 		}
 		num++;
              }
