@@ -1,7 +1,8 @@
-# include Husky-Makefile-Config
-include ../huskymak.cfg
-
 CC= g++
+DEBUG=0
+LIBDIR=/usr/local/lib
+BINDIR=/usr/local/bin
+IBOPT=-s
 
 ifeq ($(DEBUG), 1)
   CFLAGS=	-Wall -ggdb
