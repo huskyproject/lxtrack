@@ -1,3 +1,14 @@
+Thu, 26.11.1998
+---------------
+- error handling
+- 3D ftn works now (still buggy)
+- rewrite added
+- fixed bug with many scandirs
+
+Tue, 24.11.1998
+---------------
+- ftn-addresses can also be 3D now (hopefully) not tested yet
+
 Mon, 23.11.1998
 ---------------
 - packmail works now completely
