@@ -279,6 +279,7 @@ int CPkt::appendMessage()
 	fputs(msgText.c_str(), f_pkt);
 	/* write two \0 */
 	fputc(0, f_pkt);
+        fputc(0, f_pkt);
 
 	return 0;
 }
