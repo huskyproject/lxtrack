@@ -55,7 +55,7 @@ CFtnAddr::CFtnAddr(char *str)
         }
         else
                 return;
-		  buf=strsep(&strbuf, ".");
+	buf=strsep(&strbuf, ".");
         if (buf!=NULL)
         {
                 if (strstr(buf, "*") == NULL)
@@ -65,7 +65,12 @@ CFtnAddr::CFtnAddr(char *str)
         }
         else
                 return;
-		  strcpy(buf,strbuf);
+        strcpy(buf,strbuf);
+	if (!isdigit(buf[0]))
+	{
+		point=0;
+		return ;
+	}
         if (buf!=NULL)
         {
                 if (strstr(buf, "*") == NULL)
@@ -73,11 +78,6 @@ CFtnAddr::CFtnAddr(char *str)
                 else
                         point=65535;
         }
-        else
-	{
-		point=0;
-                return;
-	}
 
 }
 
@@ -135,7 +135,7 @@ CFtnAddr CFtnAddr::parseFromStr(char * str)
         }
         else
                 return NULL;
-		  buf=strsep(&strbuf, ".");
+	buf=strsep(&strbuf, ".");
         if (buf!=NULL)
         {
                 if (strstr(buf, "*") == NULL)
@@ -146,7 +146,11 @@ CFtnAddr CFtnAddr::parseFromStr(char * str)
         else
                 return NULL;
 	strcpy(buf,strbuf);
-        
+        if (!isdigit(buf[0]))
+	{
+		point=0;
+		return (*this);
+	} 
 	if (buf!=NULL)
         {
                 if (strstr(buf, "*") == NULL)
@@ -154,11 +158,6 @@ CFtnAddr CFtnAddr::parseFromStr(char * str)
                 else
                         point=65535;
         }
-        else
-	{
-		point=0;
-                return (*this);
-	}
 	return (*this);
 }
 
