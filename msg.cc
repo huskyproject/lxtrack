@@ -60,7 +60,11 @@ int CMsg::Open(int i_num, HAREA area)
 int CMsg::New(HAREA area)
 {
 	hmsg= MsgOpenMsg(area, MOPEN_CREATE, 0);
-	if (hmsg==NULL) return -1;
+	if (hmsg==NULL) 
+	{
+		cerr << "Unable to create message!";
+		return -1;
+	}
 	return 0;
 }
 
@@ -133,6 +137,7 @@ int CMsg::Close()
 	if (hmsg!=NULL && deleted==false) MsgCloseMsg(hmsg);
 	return 0;
 }
+
 
 int CMsg::Delete(HAREA Area)
 {

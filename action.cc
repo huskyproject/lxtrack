@@ -77,82 +77,53 @@ int CHdrFileAction::run()
 
 int CBounceAction::run()
 {
-	CMsg Message;
-	CMsg BncMessage;
-	string temp;
-	string addr;
-	char buf;
-	char buf2[128];
-	time_t tm;
-	struct tm *dt;
+        CMsg SrcMessage;
+        CMsg TgtMessage;
+        /* open messages */
+        SrcMessage.Open(msgnum, Area);
+        TgtMessage.New(Area);
+cout << "created message" << endl;
+        /* Write Headers */
+        TgtMessage.F_From=SrcMessage.F_To;
+        TgtMessage.s_From=SrcMessage.s_To;
+        TgtMessage.F_To=SrcMessage.F_From;
+        TgtMessage.s_To=SrcMessage.s_From;
 
+        /* Write Subject */
+        TgtMessage.s_Subject="[bounce]";
+        TgtMessage.s_Subject+=SrcMessage.s_Subject;
 
-	temp=param;
+        /* write attributes */
+        TgtMessage.d_Attr=MSGPRIVATE;
 
-	Message.Open(msgnum, Area);
-	/*------- get parameters --------*/             
-	while (temp[0]==' ') temp.erase(0,1);
-        if (temp[temp.size()]=='\n') temp.erase(temp.size(), 1);
-        do
-        {
-           addr+=temp[0];
-           temp.erase(0,1);
-        } while (temp[0]!=' ');
-        while (temp[0]==' ') temp.erase(0,1);
-	bounceFname=temp;
-
-	/*------- open bouncefile --------*/
-	f_bounceTxt=fopen(bounceFname.c_str(), "r");
-	while(1)
+        string s_Text;
+        string s_Kludges;
+cout << "writing kludges" << endl;
+        /* write fmpt, topt, intl info */
+        char buf[25];
+        if (TgtMessage.F_From.point!=0) 
 	{
-		buf=fgetc(f_bounceTxt);
-		if (buf==EOF) break;
-		if (buf=='\n') s_BounceText+='\r';
-		else s_BounceText+=buf;
+	   sprintf(buf, "\001FMPT %i", TgtMessage.F_From.point);
+	   s_Kludges+=buf;
 	}
+	if (TgtMessage.F_To.point!=0) 
+	{
+	   sprintf(buf, "\001TOPT %i", TgtMessage.F_To.point);
+	   s_Kludges+=buf;
+	}
+	sprintf(buf, "\001INTL %i:%i/%i %i:%i/%i", 
+				TgtMessage.F_To.zone, TgtMessage.F_To.net, TgtMessage.F_To.node,
+				TgtMessage.F_From.zone, TgtMessage.F_From.net, TgtMessage.F_From.node);
+	s_Kludges+=buf;
+cout << "wrote kludges!" << endl;	
+	string s_Temp;
+	int i_spaces=0;
+cout << "writing messageText" << endl;
+	TgtMessage.s_Ctrl+=s_Kludges;
 
-	/*------ replace macros with real fields -----*/
-	int pos;
-
-/* TODO: Add code for replacing bounce text fields with real values */
-
-	/*------- write message ----------*/
-        time(&tm);
-        dt = gmtime(&tm);
-	A_FromAddress=const_cast<char*>(addr.c_str());
-	BncMessage.New(Area);
-	BncMessage.sent=false;
-        BncMessage.F_From=A_FromAddress;
-        BncMessage.F_To=Message.F_From;
-
-		/* kludges */
-	BncMessage.s_Ctrl+="\001FMPT ";
-	char temppoint[6];
-	sprintf(temppoint,"%i", A_FromAddress.point);
-	BncMessage.s_Ctrl+=temppoint;
-	BncMessage.s_Ctrl+="\001TOPT ";
-	sprintf(temppoint, "%i", Message.F_From.point);
-	BncMessage.s_Ctrl+=temppoint;
-	BncMessage.s_Ctrl+="\001MSGID: ";
-	char tempmsgid[36];
-	sprintf(tempmsgid,"%i:%i/%i.%i %8lx", BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point, time(NULL));
-	BncMessage.s_Ctrl+=tempmsgid;
-		/* message text */
-	BncMessage.s_MsgText=s_BounceText;
-	BncMessage.s_MsgText+=Message.s_MsgText;
-	BncMessage.s_From="LxTrack";
-	BncMessage.s_To=Message.s_From;
-	BncMessage.s_Subject="[Message Bounced]: ";
-	BncMessage.s_Subject+=Message.s_Subject;
-   	sprintf(buf2, "\001Via %u:%u/%u.%u @%04u%02u%02u.%02u%02u%02u.UTC %s %s",
-           BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point,
-           dt->tm_year + 1900, dt->tm_mon + 1, dt->tm_mday, dt->tm_hour+1, dt->tm_min, dt->tm_sec, PRGNAME, VERSION);
-	BncMessage.s_MsgText+=buf2;
-	string logstr="Bounced message from " + Message.s_From + " to " + Message.s_To;
-	log->add(2, logstr);
-	BncMessage.Write();
-	BncMessage.Close();
-	Message.Close();
+	TgtMessage.Write();
+	TgtMessage.Close();
+	SrcMessage.Close();
 	return 0;
 }
 

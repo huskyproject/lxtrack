@@ -5,7 +5,7 @@ COPT=   -O3 -m486 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizatio
 
 TARGET= lxtrack
 
-SMAPI=smapi
+SMAPI=smapilnx
 
 OBJS=	action.o  \
 	area.o    \

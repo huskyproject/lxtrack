@@ -188,12 +188,15 @@ int CPkt::appendMessage()
                         dt->tm_mday, dt->tm_year, dt->tm_hour, dt->tm_min, dt->tm_sec);
         if (dt->tm_mon==11) sprintf(datetime, "%02u Dec %02u %02u:%02u:%02u",
                         dt->tm_mday, dt->tm_year, dt->tm_hour, dt->tm_min, dt->tm_sec);
-	for (int i=0;i<20;i++) fputc(datetime[i], f_pkt);
+	if (strlen(datetime)<20)
+		for (int i=strlen(datetime);i<19;i++) datetime[i]=0;
+	for (int i=0;i<19;i++) fputc(datetime[i], f_pkt);
 
 	/* write sender name */
 	if (Message.s_To.length()<36) 
 	{
-		fputs(Message.s_To.c_str(), f_pkt);
+		for (int i=0;i<Message.s_To.length();i++)
+			fputc(Message.s_To[i], f_pkt);
 		fputc(0, f_pkt);
 	}
 	else 
@@ -205,8 +208,9 @@ int CPkt::appendMessage()
 	/* write recipient name */
         if (Message.s_From.length()<36) 
 	{
-		fputs(Message.s_From.c_str(), f_pkt);
-		fputc(0,f_pkt);
+                for (int i=0;i<Message.s_From.length();i++)
+                        fputc(Message.s_From[i], f_pkt);
+                fputc(0, f_pkt);
 	}
         else
         {
@@ -217,8 +221,10 @@ int CPkt::appendMessage()
 	/* write subject line */
         if (Message.s_Subject.length()<72) 
 	{
-		fputs(Message.s_Subject.c_str(), f_pkt);
-		fputc(0, f_pkt);
+                for (int i=0;i<Message.s_Subject.length();i++)
+                        fputc(Message.s_Subject[i], f_pkt);
+                fputc(0, f_pkt);
+ 
 	}
         else
         {
@@ -238,6 +244,7 @@ int CPkt::appendMessage()
 		else 
 			msgText+="\r\001";
 	}
+	msgText+='\r';
 	msgText+='\r';
 	if (msgText[msgText.length()-1]!='\0') msgText.erase(msgText.length()-1,1);
 /*	if ((Message.F_From.point!=0) && (msgText.find("FMPT")==-1))
@@ -279,7 +286,6 @@ int CPkt::appendMessage()
 	fputs(msgText.c_str(), f_pkt);
 	/* write two \0 */
 	fputc(0, f_pkt);
-        fputc(0, f_pkt);
 
 	return 0;
 }
