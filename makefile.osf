@@ -9,9 +9,9 @@ CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\" -DIS_NOTGCC
 
 # -g cannot be combined with -O3, so rebuild if you make a release!
 ifeq ($(DEBUG), 1)
-  COPT=-g
+  COPT=-g -I$(INCDIR)
 else
-  COPT=-s
+  COPT=-s -I$(INCDIR)
 endif
 
 LOPT=-L$(LIBDIR)

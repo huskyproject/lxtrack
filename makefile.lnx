@@ -2,12 +2,13 @@ CC= g++
 DEBUG=0
 LIBDIR=/usr/local/lib
 BINDIR=/usr/local/bin
+INCDIR=/usr/local/include
 IBOPT=-s
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=	-Wall -ggdb
+  CFLAGS=	-Wall -ggdb -I$(INCDIR)
 else
-  CFLAGS=	-Wall -s
+  CFLAGS=	-Wall -s -I$(INCDIR)
 endif
 
 CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\"
