@@ -8,6 +8,7 @@
 #include "action.h"
 #include "msg.h"
 #include "version.h"
+#include "pkt.h"
 #include "global.h"
 
 CAction::CAction()
@@ -221,3 +222,32 @@ int CMoveAction::run()
         return 0;
 }
 		
+int CPackmailAction::run()
+{
+	CPkt pkt;
+	string fromnode, tonode, passwd;
+
+        string temp=param;
+	while (temp[0]==' ') temp.erase(0,1);
+        do
+        {
+           fromnode+=temp[0];
+           temp.erase(0,1);
+        } while (temp[0]!=' ');
+        while (temp[0]==' ') temp.erase(0,1);
+        do
+        {
+           tonode+=temp[0];
+           temp.erase(0,1);
+        } while (temp[0]!=' ');
+	while(temp[0]==' ') temp.erase(0,1);
+	passwd=temp;
+
+	pkt.fromNode=const_cast<char*>(fromnode.c_str());
+	pkt.toNode=const_cast<char*>(tonode.c_str());
+	pkt.password=passwd;
+	pkt.Message.Open(msgnum, Area);
+	pkt.create();
+	pkt.Message.Close();
+	return 0;
+}
