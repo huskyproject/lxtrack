@@ -8,6 +8,7 @@
 #include "action.h"
 #include "msg.h"
 #include "version.h"
+#include "global.h"
 
 CAction::CAction()
 {
@@ -46,6 +47,8 @@ int CFileAction::run()
         fputs(Message.s_MsgText.c_str(),f_txtFile);
         fputs("\n",f_txtFile);
 	Message.Close();
+	string logstr="Writing Message to File " + s_Filename;
+	log->add(2,logstr);
 	fclose(f_txtFile);
 	return 0;
 }
@@ -157,6 +160,8 @@ int CBounceAction::run()
            BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point,
            dt->tm_year + 1900, dt->tm_mon + 1, dt->tm_mday, dt->tm_hour+1, dt->tm_min, dt->tm_sec, PRGNAME, VERSION);
 	BncMessage.s_MsgText+=buf2;
+	string logstr="Bounced message from " + Message.s_From + " to " + Message.s_To;
+	log->add(2, logstr);
 	BncMessage.Write();
 	BncMessage.Close();
 	Message.Close();
@@ -181,6 +186,8 @@ int CCopyAction::run()
 	DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
 	DestMsg.sent=true;
 	DestMsg.Write();
+	string logstr="Copied Message to Area " + destarea;
+	log->add(2,logstr);
 	DestMsg.Close();
 	SrcMsg.Close();
 	AArea.Close();
@@ -205,6 +212,8 @@ int CMoveAction::run()
         DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
         DestMsg.sent=true;
         DestMsg.Write();
+	string logstr="Moved message to Area " + destarea;
+	log->add(2, logstr); 
 	SrcMsg.Delete(Area);
 	SrcMsg.deleted=true;
         DestMsg.Close();

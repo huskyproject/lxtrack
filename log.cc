@@ -8,7 +8,7 @@ int CLog::intro()
 {
 	time(&tm);
 	dt=gmtime(&tm);
-        fprintf(f_log, "---------- %i.%i.%i %s %s\n", dt->tm_mday+1, dt->tm_mon+1, dt->tm_year+1900, PRGNAME, VERSION);
+        fprintf(f_log, "---------- %i.%i.%i %s %s\n", dt->tm_mday+1, dt->tm_mon, dt->tm_year+1900, PRGNAME, VERSION);
 	return 0;
 }
 

@@ -1,17 +1,26 @@
-LxTrack
--------
-
-This utility is a NetMgr compatible Netmail Tracker for Linux.
-It shouldn´t be much of a problem to port it, though, as I´ve used ANSI
-C++ almost exclusively. (strsep() is the only exception)
-
-It reads (or rather should read) the NetMgr config file. At the moment
-all keywords there are case-sensitive.
-
-Don´t expect much stability. It has a pretty strong tendency to crash.
-And there is no exception-handling at all. (I´m working on it at the moment)
-
-You need an ANSI C++ compiler, which supports strings and vectors. I´m 
-using egcs 1.1.
+				LxTrack
+			-----------------------
 
 
+
+  I. Introduction
+ II. Config file
+III. Portability Issues
+
+I. Introduction
+===============
+
+Lxtrack was designed to be a fully compatible NetMgr-Clone for Linux. The current version is somewhere around
+-0.1 ;) 
+
+
+II. Config file
+===============
+
+Lxtrack uses the same config-format as Netmgr. Refer to Netmgr documentation for details.
+
+III. Portability Issues
+=======================
+
+The code is written almost exclusively using ANSI C++, so it shouldn't be too hard to port it to any system 
+which has a C++ compiler conforming to ANSI.
