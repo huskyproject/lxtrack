@@ -1,5 +1,5 @@
 # include Husky-Makefile-Config
-include ../../huskymak.cfg
+include ../huskymak.cfg
 
 CC= g++
 

@@ -1,7 +1,7 @@
 # Makefile for DEC Unix with vendor Cxx Version 6.0
 
 # include Husky-Makefile-Config
-include ../../huskymak.cfg
+include ../huskymak.cfg
 
 CC=cxx
 CFLAGS=
