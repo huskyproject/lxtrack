@@ -20,7 +20,7 @@ OBJS=	action.o  \
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 lxtrack: $(OBJS)
-	$(CC) -s $(OBJS) -l$(SMAPI) -o $(TARGET)
+	$(CC) $(OBJS) -l$(SMAPI) -o $(TARGET)
 
 clean:
 	rm lxtrack *.o

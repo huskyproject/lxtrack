@@ -11,7 +11,7 @@ class CFtnAddr
 		CFtnAddr();
 		CFtnAddr(int a, int b, int c, int d);
 		CFtnAddr(char * str);
-		CFtnAddr& operator=(const CFtnAddr & ftn);
+		CFtnAddr operator=(const CFtnAddr ftn);
 		CFtnAddr& operator=(char *ftnstr);
 		CFtnAddr& operator=(const NETADDR addr);
 		bool operator==(const CFtnAddr & ftn);

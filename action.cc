@@ -7,6 +7,7 @@
 #include "area.h"
 #include "action.h"
 #include "msg.h"
+#include "version.h"
 
 CAction::CAction()
 {
@@ -125,27 +126,36 @@ int CBounceAction::run()
         s_BounceText.replace(s_BounceText.find("%fto"), 6, s_FirstTo);
 
 	/*------- write message ----------*/
+        time(&tm);
+        dt = gmtime(&tm);
 	A_FromAddress=const_cast<char*>(addr.c_str());
 	BncMessage.New(Area);
 	BncMessage.sent=false;
+        BncMessage.F_From=A_FromAddress;
+        BncMessage.F_To=Message.F_From;
+
+		/* kludges */
 	BncMessage.s_Ctrl+="\001FMPT ";
-	BncMessage.s_Ctrl+="23";
+	char temppoint[6];
+	sprintf(temppoint,"%i", A_FromAddress.point);
+	BncMessage.s_Ctrl+=temppoint;
 	BncMessage.s_Ctrl+="\001TOPT ";
-	BncMessage.s_Ctrl+="0";
-	BncMessage.s_Ctrl+="";
+	sprintf(temppoint, "%i", Message.F_From.point);
+	BncMessage.s_Ctrl+=temppoint;
+	BncMessage.s_Ctrl+="\001MSGID: ";
+	char tempmsgid[36];
+	sprintf(tempmsgid,"%i:%i/%i.%i 474747FF", BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point);
+	BncMessage.s_Ctrl+=tempmsgid;
+		/* message text */
 	BncMessage.s_MsgText=s_BounceText;
 	BncMessage.s_MsgText+=Message.s_MsgText;
-	BncMessage.F_From=A_FromAddress;
-	BncMessage.F_To=Message.F_From;
 	BncMessage.s_From="LxTrack";
 	BncMessage.s_To=Message.s_From;
 	BncMessage.s_Subject="[Message Bounced]: ";
 	BncMessage.s_Subject+=Message.s_Subject;
-   	time(&tm);
-   	dt = gmtime(&tm);
-   	sprintf(buf2, "\001Via LxTrack/LNX %u:%u/%u.%u @%04u%02u%02u.%02u%02u%02u.UTC %s",
+   	sprintf(buf2, "\001Via %u:%u/%u.%u @%04u%02u%02u.%02u%02u%02u.UTC %s %s",
            BncMessage.F_From.zone, BncMessage.F_From.net, BncMessage.F_From.node, BncMessage.F_From.point,
-           dt->tm_year + 1900, dt->tm_mon + 1, dt->tm_mday, dt->tm_hour+1, dt->tm_min, dt->tm_sec, "0.01");
+           dt->tm_year + 1900, dt->tm_mon + 1, dt->tm_mday, dt->tm_hour+1, dt->tm_min, dt->tm_sec, PRGNAME, VERSION);
 	BncMessage.s_MsgText+=buf2;
 	BncMessage.Write();
 	BncMessage.Close();

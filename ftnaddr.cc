@@ -78,7 +78,7 @@ CFtnAddr::CFtnAddr(char *str)
 
 }
 
-CFtnAddr& CFtnAddr::operator=(const CFtnAddr & ftn)
+CFtnAddr CFtnAddr::operator=(const CFtnAddr ftn)
 {
         zone=ftn.zone;
         node=ftn.node;
