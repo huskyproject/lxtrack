@@ -1,0 +1,2 @@
+- crashes when not able to open area
+- goes into infinite loop when packmail statement incomplete
