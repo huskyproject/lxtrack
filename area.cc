@@ -9,6 +9,7 @@
 #else
 #include <string.h>
 #endif
+using namespace std;
 #include "msg.h"
 #include "area.h"
 #include "config.h"
@@ -117,6 +118,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
    int result;
    vector<int> matches;
    dword msgnum = 1;
+   bool stopwithmsg;
 
    while (MsgGetCurMsg(a_Area) != MsgGetHighMsg(a_Area))
    {
@@ -127,8 +129,9 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
        {
 	  continue;
        }
+       stopwithmsg = false;
 
-       for (unsigned int j=start;j<stop+1;j++)
+       for (unsigned int j=start;j<stop+1 && !stopwithmsg;j++)
        {
 	  actualMask=Message.GetMask();
 	  /*------------ scan for matching mask ---------------*/
@@ -158,7 +161,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
         	{
                    type+=temp[0];
                    temp.erase(0,1);
-        	} while (temp[0]!=' ');
+        	} while (temp.length()>0 && temp[0]!=' ');
         	while (temp[0]==' ') temp.erase(0,1);
         	RestParam=temp;
 		char number[6];
@@ -211,6 +214,8 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		   TempAction.Area=a_Area;
                    TempAction.msgnum=MsgGetCurMsg(a_Area);
                    TempAction.run();
+                   stopwithmsg = true;
+                   break;
                 }
 		/*-------- packmail action -------*/
 		if (type=="packmail")
@@ -260,10 +265,21 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		    TempAction.param=RestParam;
 	            TempAction.run();
 		}
-		if (type=="ignore")
-		{
-		    continue;
-		}
+                if (type=="delete")
+                {
+                    CDeleteAction TempAction;
+                    TempAction.Area=a_Area;
+                    TempAction.msgnum=MsgGetCurMsg(a_Area);
+                    TempAction.run();
+                    stopwithmsg = true;
+                    break;
+                }
+                if (type=="ignore")
+                {
+                    stopwithmsg = true;
+                    break;
+                }
+
              }
 	  }
       }

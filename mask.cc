@@ -1,4 +1,5 @@
 #include <string>
+using namespace std;
 #include "strsep.h"
 #include "mask.h"
 
@@ -78,24 +79,21 @@ bool CMask::operator==(const CMask& msk)
 	if (s_Subject=="*") subjMatch=true;
 	
 	/* do dirty checking with ~ */
-	if (strstr(s_Sender.c_str(), "~")!=NULL)
+	if (strchr(s_Sender.c_str(), '~')!=NULL)
 	{
-		s_Sender.erase(s_Sender.find("~"), 1);
-		if (strstr(msk.s_Sender.c_str(), s_Sender.c_str())!=NULL)
+		if (strstr(msk.s_Sender.c_str(), strchr(s_Sender.c_str(),'~')+1)!=NULL)
 			sndMatch=true;
 	}
 
-        if (strstr(s_Sender.c_str(), "~")!=NULL)
+        if (strchr(s_Recipient.c_str(), '~')!=NULL)
         {
-                s_Recipient.erase(s_Recipient.find("~"), 1);
-                if (strstr(msk.s_Recipient.c_str(), s_Recipient.c_str())!=NULL)
+                if (strstr(msk.s_Recipient.c_str(), strchr(s_Recipient.c_str(),'~')+1)!=NULL)
                         rcpMatch=true;
         }
 
-        if (strstr(s_Subject.c_str(), "~")!=NULL)
+        if (strchr(s_Subject.c_str(), '~')!=NULL)
         {
-                s_Subject.erase(s_Subject.find("~"), 1);
-                if (strstr(msk.s_Subject.c_str(), s_Subject.c_str())!=NULL)
+                if (strstr(msk.s_Subject.c_str(), strchr(s_Subject.c_str(),'~')+1)!=NULL)
                         subjMatch=true;
         }
 

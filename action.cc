@@ -9,6 +9,7 @@
 #include <stdio.h>
 #endif
 #include <string>
+using namespace std;
 #include <time.h>
 extern "C"
 {
@@ -429,4 +430,16 @@ int CEchoMoveAction::run()
    AArea.Close();
    return 0;
 }*/
-											
+
+int CDeleteAction::run()
+{
+        CMsg SrcMsg;
+        char logstr[64];
+        SrcMsg.Open(msgnum, Area);
+        SrcMsg.Delete(Area);
+        SrcMsg.deleted=true;
+        sprintf(logstr,"Deleted message #%d",msgnum);
+        log->add(2, logstr);
+        return 0;
+}
+
