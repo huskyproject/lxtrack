@@ -1,0 +1,42 @@
+# include Husky-Makefile-Config
+include ../huskymak.cfg
+
+ifeq ($(DEBUG), 1)
+  CFLAGS=	-Wall -ggdb
+else
+  CFLAGS=	-Wall -s
+endif
+
+CDEFS=	-D$(OSTYPE) -DCONFIGDIR=\"lxtrack.cfg\" $(ADDCDEFS)
+COPT=   -O3 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations
+LOPT= -L$(LIBDIR)
+
+OBJS=	action$(OBJ)  \
+	area$(OBJ)    \
+	config$(OBJ)  \
+	ftnaddr$(OBJ) \
+	global$(OBJ)  \
+	log$(OBJ)     \
+	lxtrack$(OBJ) \
+	mask$(OBJ)    \
+	msg$(OBJ)     \
+	pkt$(OBJ)     \
+        strsep$(OBJ)
+
+all: lxtrack$(EXE)
+
+.cc$(OBJ):
+	$(GPP) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
+
+lxtrack: $(OBJS)
+	$(GPP) $(OBJS) $(CFLAGS) $(LOPT) -lsmapi -o lxtrack
+
+clean:
+	$(RM) *$(OBJ) core
+
+distclean: clean
+	$(RM) lxtrack$(EXE)
+
+install: lxtrack$(EXE)
+	install $(IBOPT) lxtrack$(EXE) $(BINDIR)
+
