@@ -17,15 +17,20 @@ class CFtnAddr
 {
 	public:				/*------- data ------*/
 		int		zone;
+		bool            anyzone;
 		int		net;
+		bool            anynet;
 		int		node;
+		bool            anynode;
 		int		point;
-		string	domain;
+		bool            anypoint;
+		string	        domain;
+		bool            anydomain;
 
 	public:					/*-- constructors ---*/
 		CFtnAddr();
-		CFtnAddr(const CFtnAddr & in);
-		CFtnAddr(string str);
+		CFtnAddr(const CFtnAddr &in);
+		CFtnAddr(const string &str);
 
 	public:					/*--- destructors ---*/
 		~CFtnAddr();
@@ -35,29 +40,31 @@ class CFtnAddr
 		friend ostream&	operator<<(ostream& os, CFtnAddr out);
 
 		/* input */
-		friend string&		operator>>(string& str, CFtnAddr& in);
-		friend istream&	operator>>(istream& is, CFtnAddr& in);
+		friend string&		operator>>(string &str, CFtnAddr &in);
+		friend istream&	operator>>(istream &is, CFtnAddr &in);
 		
 		/* assignment */
-		CFtnAddr&			operator=(CFtnAddr in);
-		CFtnAddr&			operator=(string str);
-		CFtnAddr&			operator=(char * str);
-		CFtnAddr&			operator=(NETADDR addr);
+		CFtnAddr&			operator=(const CFtnAddr &in);
+		CFtnAddr&			operator=(const string &str);
+		CFtnAddr&			operator=(const char * str);
+		CFtnAddr&			operator=(const NETADDR &addr);
 
 		/* comparison */
-		friend bool			operator==(CFtnAddr arg1, CFtnAddr arg2);
-		friend bool			operator==(CFtnAddr arg1, char * arg2);
+		friend bool			operator==(const CFtnAddr &arg1,
+							   const CFtnAddr &arg2);
+		friend bool			operator==(const CFtnAddr &arg1,
+							   const char * arg2);
 
 	public:					/*------- misc -------*/
-		bool		isPoint();
-		int		Zone();
-		int		Net();
-		int 		Node();
-		int		Point();
-		string	Domain();
+		bool		isPoint() const;
+		int		Zone() const;
+		int		Net() const;
+		int 		Node() const;
+		int		Point() const;
+		string          Domain() const;
 	
-	public:
-		void		getFromStr(string& str);
+	private:
+		void		getFromStr(const string &str);
 
 };
 #endif

@@ -114,16 +114,20 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 {
    CMsg Message;
    CMask actualMask;
-   int num=1;
    int result;
    vector<int> matches;
-   for (unsigned int i=1;i<i_msgNum+1;i++)
+   dword msgnum = 1;
+
+   while (MsgGetCurMsg(a_Area) != MsgGetHighMsg(a_Area))
    {
-       result=Message.Open(i, a_Area);
+       result=Message.Open(msgnum, a_Area);
+       if (msgnum == 1) msgnum = MSGNUM_NEXT;
+
        if (result==-1)
        {
 	  continue;
        }
+
        for (unsigned int j=start;j<stop+1;j++)
        {
 	  actualMask=Message.GetMask();
@@ -134,7 +138,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
              if (0==1)  // FIX: add searching code... 
                 continue;
              else  
-                matches.push_back(i);
+                matches.push_back(MsgGetCurMsg(a_Area));
              
 	     /* TODO: write code to check, if there was already a hit and continue(); if yes */
               
@@ -158,7 +162,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
         	while (temp[0]==' ') temp.erase(0,1);
         	RestParam=temp;
 		char number[6];
-		sprintf(number, "%i", i);
+		sprintf(number, "%lu", MsgGetCurMsg(a_Area));
 
 		/*----- action file -----*/
 		if (type=="file")
@@ -166,7 +170,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
                    CFileAction TempAction;
                    TempAction.s_Filename=RestParam;
 		   if (M_ScanFor[j].M_Mask.i_match.size()>1) TempAction.s_Filename+=number;
-                   TempAction.msgnum=i;
+                   TempAction.msgnum=MsgGetCurMsg(a_Area);
                    TempAction.Area=a_Area;
                    TempAction.run();
                 }
@@ -177,7 +181,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		   CHdrFileAction TempAction;
 		   TempAction.s_Filename=RestParam;
 		   if (M_ScanFor[j].M_Mask.i_match.size()>1) TempAction.s_Filename+=number;
-                   TempAction.msgnum=i;
+                   TempAction.msgnum=MsgGetCurMsg(a_Area);
                    TempAction.Area=a_Area;
                    TempAction.run();
 		}
@@ -186,7 +190,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		{
 		   CBounceAction TempAction;
 		   TempAction.param=RestParam;
-		   TempAction.msgnum=i;
+		   TempAction.msgnum=MsgGetCurMsg(a_Area);
 		   TempAction.Area=a_Area;
 		   TempAction.run();
 		}
@@ -196,7 +200,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		   CCopyAction TempAction;
 		   TempAction.param=RestParam;
 		   TempAction.Area=a_Area;
-		   TempAction.msgnum=i;
+		   TempAction.msgnum=MsgGetCurMsg(a_Area);
 		   TempAction.run();
 		}
                 /*------- action move --------*/
@@ -205,7 +209,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
                    CMoveAction TempAction;
                    TempAction.param=RestParam;
 		   TempAction.Area=a_Area;
-                   TempAction.msgnum=i;
+                   TempAction.msgnum=MsgGetCurMsg(a_Area);
                    TempAction.run();
                 }
 		/*-------- packmail action -------*/
@@ -216,7 +220,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		       CPackmailAction TempAction;
 		       TempAction.param=RestParam;
 		       TempAction.Area=a_Area;
-		       TempAction.msgnum=i;
+		       TempAction.msgnum=MsgGetCurMsg(a_Area);
 		       TempAction.run();
 		    }
 		}
@@ -228,7 +232,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
                        CMovemailAction TempAction;
                        TempAction.param=RestParam;
                        TempAction.Area=a_Area;
-                       TempAction.msgnum=i;
+                       TempAction.msgnum=MsgGetCurMsg(a_Area);
                        TempAction.run();
                     }
                 }
@@ -238,7 +242,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		    CRewriteAction TempAction;
 		    TempAction.param=RestParam;
 		    TempAction.Area=a_Area;
-		    TempAction.msgnum=i;
+		    TempAction.msgnum=MsgGetCurMsg(a_Area);
 		    TempAction.run();
 		}
 		/*--------- display action ----------*/
@@ -260,11 +264,10 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		{
 		    continue;
 		}
-		num++;
              }
-	     Message.Close();
 	  }
       }
+      Message.Close();
    }
 	return 0;
 }

@@ -61,6 +61,7 @@ int CMsg::Open(int i_num, HAREA area)
 	F_To=xmsg.dest;
 	d_Attr=xmsg.attr;
 	i_number=i_num;
+	deleted=false;
 	delete [] buf1;
 	delete [] buf2;
 	return 0;

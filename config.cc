@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #endif
+#include <ctype.h>
 #include "config.h"
 #include "strsep.h"
 #include "mask.h"
@@ -48,7 +49,7 @@ param CConfig::getParam(string line)
 	if (line[line.size()]=='\n') line.erase(line.size(), 1);
 	do 
 	{
-		token+=line[0];
+		token += tolower(line[0]);
 		line.erase(0,1);
 	} while (line[0]!=' ');
 

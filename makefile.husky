@@ -29,13 +29,19 @@ OBJS=	action$(OBJ)  \
 	pkt$(OBJ)     \
         strsep$(OBJ)
 
-all: lxtrack$(EXE)
+HDRS=action.h area.h bastypes.h config.h ftnaddr.h global.h log.h mask.h \
+  msg.h op.h pkt.h scndr.h strsep.h version.h
 
-.cc$(OBJ):
+all: lxtrack$(EXE) lxtrack.1.gz
+
+.cc$(OBJ): $(HDRS)
 	$(GPP) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
-lxtrack: $(OBJS)
+lxtrack$(EXE): $(OBJS)
 	$(GPP) $(OBJS) $(LFLAGS) $(LOPT) -o lxtrack
+
+lxtrack.1.gz: lxtrack.1
+	gzip -c lxtrack.1 > lxtrack.1.gz
 
 clean:
 	-$(RM) *$(OBJ)
@@ -43,7 +49,9 @@ clean:
 
 distclean: clean
 	-$(RM) lxtrack$(EXE)
+	-$(RM) lxtrack.1.gz
 
 install: lxtrack$(EXE)
 	$(INSTALL) $(IBOPT) lxtrack$(EXE) $(BINDIR)
+	$(INSTALL) $(IMOPT) lxtrack.1.gz $(MANDIR)/man1
 

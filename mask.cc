@@ -107,7 +107,6 @@ bool CMask::operator==(const CMask& msk)
 
 int CMask::parseAttr(string s_Flags)
 {
-	dword attr;
 	bool mand=false;
 	for (unsigned int i=0;i<s_Flags.size()-1;i+=2)
 	{

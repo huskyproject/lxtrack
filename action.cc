@@ -129,7 +129,6 @@ cout << "writing kludges" << endl;
 	s_Kludges+=buf;
 cout << "wrote kludges!" << endl;	
 	string s_Temp;
-	int i_spaces=0;
 cout << "writing messageText" << endl;
 	TgtMessage.s_Ctrl+=s_Kludges;
 
