@@ -2,14 +2,19 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=	-Wall -ggdb
+  CFLAGS=	-Wall -ggdb -I../smapi -I$(INCDIR)
 else
-  CFLAGS=	-Wall -s
+  CFLAGS=	-Wall -s -I../smapi -I$(INCDIR)
 endif
 
-CDEFS=	-D$(OSTYPE) -DCONFIGDIR=\"lxtrack.cfg\" $(ADDCDEFS)
-COPT=   -O3 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations
-LOPT= -L$(LIBDIR)
+CDEFS=-D$(OSTYPE) -DCONFIGDIR=\"lxtrack.cfg\" $(ADDCDEFS)
+COPT=-O3 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations
+
+ifeq ($(SHORTNAME), 1)
+  LOPT= -L$(LIBDIR) -lsmapi
+else
+  LOPT= -L$(LIBDIR) -lsmapi
+endif
 
 OBJS=	action$(OBJ)  \
 	area$(OBJ)    \
@@ -29,14 +34,15 @@ all: lxtrack$(EXE)
 	$(GPP) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 lxtrack: $(OBJS)
-	$(GPP) $(OBJS) $(CFLAGS) $(LOPT) -lsmapi -o lxtrack
+	$(GPP) $(OBJS) $(CFLAGS) $(LOPT) -o lxtrack
 
 clean:
-	$(RM) *$(OBJ) core
+	-$(RM) *$(OBJ)
+	-$(RM) core
 
 distclean: clean
-	$(RM) lxtrack$(EXE)
+	-$(RM) lxtrack$(EXE)
 
 install: lxtrack$(EXE)
-	install $(IBOPT) lxtrack$(EXE) $(BINDIR)
+	$(INSTALL) $(IBOPT) lxtrack$(EXE) $(BINDIR)
 
