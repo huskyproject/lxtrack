@@ -1,3 +1,8 @@
+Sun, 22.11.1998
+---------------
+- packmail rewritten completely (surprisingly it also works)
+- some error handling
+
 Sat, 21.11.1998
 ---------------
 - packmail works more or less (no support for multiple messages per packet yet)

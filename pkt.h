@@ -12,14 +12,6 @@ class CPkt
 	   CMsg Message;
 	   CFtnAddr toNode;
 	   CFtnAddr fromNode;
-	   int year;
-	   int month;
-	   int day;
-	   int hour;
-	   int minute;
-	   int second;
-	   int baud;
-	   int pktver;
 	   string password;
 	   
 	   int create();
@@ -27,7 +19,8 @@ class CPkt
 	   FILE *f_pkt;
 	   bool newPkt;
 	   int openPkt();
-	   int writePkt();
+	   int writeHeader();
+	   int appendMessage();
 	   int closePkt();
 };
 #endif
