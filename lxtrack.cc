@@ -1,4 +1,8 @@
+#ifndef IS_OLDGCC
 #include <iostream>
+#else
+#include <iostream.h>
+#endif
 #include <cstdio>
 #include <string>
 

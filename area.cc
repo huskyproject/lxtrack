@@ -1,5 +1,9 @@
 #include <stdio.h>
+#ifndef IS_OLDGCC
+#include <iostream>
+#else
 #include <iostream.h>
+#endif
 #include <cstring>
 #include "msg.h"
 #include "area.h"
