@@ -3,7 +3,7 @@
 #include "area.h"
 extern "C"
 {
-#include "../smapi/msgapi.h"
+#include <smapi/msgapi.h>
 }
 
 class CAction

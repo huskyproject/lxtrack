@@ -2,10 +2,10 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=	$(WARNFLAGS) $(DEBCFLAGS) -I../smapi -I$(INCDIR)
+  CFLAGS=	$(WARNFLAGS) $(DEBCFLAGS) -I$(INCDIR)
   LFLAGS= $(DEBLFLAGS)
 else
-  CFLAGS=	$(WARNFLAGS) $(OPTCFLAGS) -s -I../smapi -I$(INCDIR)
+  CFLAGS=	$(WARNFLAGS) $(OPTCFLAGS) -s -I$(INCDIR)
   LFLAGS= $(OPTLFLAGS)
 endif
 

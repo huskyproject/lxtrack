@@ -4,7 +4,7 @@
 #include <string>
 extern "C"
 {
-#include "../smapi/msgapi.h"
+#include <smapi/msgapi.h>
 }
 #include "ftnaddr.h"
 #include "bastypes.h"

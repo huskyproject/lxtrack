@@ -12,7 +12,7 @@
 #include "action.h"
 extern "C" 
 {
-#include "../smapi/msgapi.h"
+#include <smapi/msgapi.h>
 }
 
 
