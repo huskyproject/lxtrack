@@ -44,18 +44,18 @@ lxtrack.1.gz: lxtrack.1
 	gzip -c lxtrack.1 > lxtrack.1.gz
 
 clean:
-	-$(RM) *$(OBJ)
-	-$(RM) core
+	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) core
 
 distclean: clean
-	-$(RM) lxtrack$(EXE)
-	-$(RM) lxtrack.1.gz
+	-$(RM) $(RMOPT) lxtrack$(EXE)
+	-$(RM) $(RMOPT) lxtrack.1.gz
 
 install: lxtrack$(EXE)
 	$(INSTALL) $(IBOPT) lxtrack$(EXE) $(BINDIR)
 	$(INSTALL) $(IMOPT) lxtrack.1.gz $(MANDIR)/man1
 
 uninstall:
-	-$(RM) $(BINDIR)$(DIRSEP)lxtrack$(EXE) 
-	-$(RM) $(MANDIR)$(DIRSEP)man1$(DIRSEP)lxtrack.1.gz 
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)lxtrack$(EXE) 
+	-$(RM) $(RMOPT) $(MANDIR)$(DIRSEP)man1$(DIRSEP)lxtrack.1.gz 
 
