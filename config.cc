@@ -49,6 +49,7 @@ param CConfig::getParam(string line)
 	while (line[0]==' ') line.erase(0,1);	
 	parm.s_Token=token;
 	parm.s_RestOfLine=line;
+	for (unsigned int i=0;i<parm.s_Token.length();i++) parm.s_Token[i]=tolower(parm.s_Token[i]);
 	return parm;
 }
 
@@ -88,8 +89,7 @@ CConfig::CConfig()
 	
 	int scn=-1, msk=-1, actn=-1;
 	
-
-	openConfig("lxtrack.cfg");
+	openConfig(CONFIGDIR);
 	while ((s_Line=getLine())!="\n") 
 	{
 		if (s_Line=="") continue;
@@ -101,6 +101,14 @@ CConfig::CConfig()
 		if (parm.s_Token=="log")
 		{
 			s_Log=parm.s_RestOfLine;
+		}
+		if (parm.s_Token=="outbound")
+		{
+			s_Outbound=parm.s_RestOfLine;
+		}
+		if (parm.s_Token=="inbound")
+		{
+			s_Inbound=parm.s_RestOfLine;
 		}
 		if (parm.s_Token=="scandir") 
 		{

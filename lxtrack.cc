@@ -7,6 +7,7 @@
 #include "action.h"
 #include "config.h"
 #include "log.h"
+#include "global.h"
 #include "version.h"
 
 
@@ -14,8 +15,6 @@ int main()
 {
 	cout << "Linux Track" << " " << VERSION << endl;
 	initApi();
-	CConfig * cfg;
-	CLog * log;
 	cfg = new CConfig;
 	log = new CLog(cfg->s_Log);
 	log->intro();
@@ -26,6 +25,7 @@ int main()
 	}
 	closeApi();
 	delete cfg;
+	log->add(9, "finishing");
 	log->outro();
 	delete log;
 	return 0;

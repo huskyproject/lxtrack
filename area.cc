@@ -5,6 +5,7 @@
 #include "area.h"
 #include "config.h"
 #include "log.h"
+#include "global.h"
 
 int initApi()
 {
@@ -51,10 +52,8 @@ int CArea::Open(string Path)
 	if (a_Area!=NULL)
 	{
 		i_msgNum=MsgGetHighMsg(a_Area);
-                CLog log;
-		log.noclose=true;
 		string logstr="opening area " + s_Path;
-                log.add(1, logstr);
+                log->add(1, logstr);
 		return 0;
 	}
 	else
@@ -70,10 +69,8 @@ int CArea::Open()
 	if (a_Area!=NULL)
 	{
 		i_msgNum=MsgGetHighMsg(a_Area);
-		CLog log;
-		log.noclose=true;
 		string logstr="opening area " + s_Path;
-		log.add(1, logstr);
+		log->add(1, logstr);
 		return 0;
 	}
 	else
