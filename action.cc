@@ -185,6 +185,7 @@ int CCopyAction::run()
 	DestMsg.s_Subject=SrcMsg.s_Subject;
 	DestMsg.s_MsgText=SrcMsg.s_MsgText;
 	DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
+        DestMsg.d_Attr=SrcMsg.d_Attr;
 	DestMsg.sent=true;
 	DestMsg.Write();
 	string logstr="Copied Message to Area " + destarea;
@@ -211,6 +212,7 @@ int CMoveAction::run()
         DestMsg.s_Subject=SrcMsg.s_Subject;
         DestMsg.s_MsgText=SrcMsg.s_MsgText;
         DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
+	DestMsg.d_Attr=SrcMsg.d_Attr;
         DestMsg.sent=true;
         DestMsg.Write();
 	string logstr="Moved message to Area " + destarea;
@@ -238,15 +240,30 @@ int CPackmailAction::run()
         {
            tonode+=temp[0];
            temp.erase(0,1);
-        } while (temp[0]!=' ' || temp[0]!='\n');
+        } while (temp[0]!=' ');
 	while(temp[0]==' ') temp.erase(0,1);
 	passwd=temp;
-	string logstr="Packed message";
-	log->add(2, logstr);
+
 	pkt.fromNode=const_cast<char*>(fromnode.c_str());
 	pkt.toNode=const_cast<char*>(tonode.c_str());
 	pkt.password=passwd;
 	pkt.Message.Open(msgnum, Area);
+        char taddr[20];
+        char faddr[20];
+	char viaaddr[20];
+        sprintf(faddr, "%i:%i/%i.%i", 
+		pkt.Message.F_From.zone, pkt.Message.F_From.net, pkt.Message.F_From.node, pkt.Message.F_From.point);
+        sprintf(taddr, "%i:%i/%i.%i",
+	                pkt.Message.F_To.zone, pkt.Message.F_To.net, pkt.Message.F_To.node, pkt.Message.F_To.point);
+        sprintf(viaaddr, "%i:%i/%i.%i",
+                        pkt.toNode.zone, pkt.toNode.net, pkt.toNode.node, pkt.toNode.point);
+	string logstr="Packed Message from "; 
+	logstr+=faddr;
+	logstr+=" to ";
+	logstr+= taddr;
+	logstr+=" via "; 
+	logstr+=viaaddr;
+	log->add(2, logstr);
 	pkt.create();
 	pkt.Message.Close();
 	return 0;
