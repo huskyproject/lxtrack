@@ -368,4 +368,58 @@ int CSemaphoreAction::run()
 	return 0;
 }
 
+/*int CEchoCopyAction::run()
+{
+   CArea AArea;
+   CMsg SrcMsg;
+   CMsg DestMsg;
+   destarea=param;
+   AArea.Open(destarea);
+   SrcMsg.Open(msgnum, Area);
+   DestMsg.New(AArea.GetArea());
+   DestMsg.F_From=SrcMsg.F_From;
+   DestMsg.F_To=SrcMsg.F_To;
+   DestMsg.s_From=SrcMsg.s_From;
+   DestMsg.s_To=SrcMsg.s_To;
+   DestMsg.s_Subject=SrcMsg.s_Subject;
+   DestMsg.s_MsgText=SrcMsg.s_MsgText;
+   DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
+   DestMsg.d_Attr=SrcMsg.d_Attr;
+   DestMsg.sent=true;
+   DestMsg.Write();
+   string logstr="Copied Message to Area " + destarea;
+   log->add(2,logstr);
+   DestMsg.Close();
+   SrcMsg.Close();
+   AArea.Close();
+   return 0;
+}
 
+int CEchoMoveAction::run()
+{
+   CArea AArea;
+   CMsg SrcMsg;
+   CMsg DestMsg;
+   destarea=param;
+   AArea.Open(destarea);
+   SrcMsg.Open(msgnum, Area);
+   DestMsg.New(AArea.GetArea());
+   DestMsg.F_From=SrcMsg.F_From;
+   DestMsg.F_To=SrcMsg.F_To;
+   DestMsg.s_From=SrcMsg.s_From;
+   DestMsg.s_To=SrcMsg.s_To;
+   DestMsg.s_Subject=SrcMsg.s_Subject;
+   DestMsg.s_MsgText=SrcMsg.s_MsgText;
+   DestMsg.s_Ctrl=SrcMsg.s_Ctrl;
+   DestMsg.d_Attr=SrcMsg.d_Attr;
+   DestMsg.sent=true;
+   DestMsg.Write();
+   string logstr="Moved message to Area " + destarea;
+   log->add(2, logstr);
+   SrcMsg.Delete(Area);
+   SrcMsg.deleted=true;
+   DestMsg.Close();
+   AArea.Close();
+   return 0;
+}*/
+											

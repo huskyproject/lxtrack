@@ -6,6 +6,7 @@
   I. Introduction
  II. Config file
 III. Portability Issues
+     1. Header files	 
 
 I. Introduction
 ===============
@@ -24,3 +25,8 @@ III. Portability Issues
 
 The code is written almost exclusively using ANSI C++, so it shouldn't be too hard to port it to any system 
 which has a C++ compiler conforming to ANSI.
+
+III.1 Header Files
+==================
+
+If you are using a compiler that has iostream.h instead of iostream define IS_OLDGCC in the Makefile, and it should run.

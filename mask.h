@@ -2,6 +2,10 @@
 #define _MASK_H_
 #include <vector>
 #include <string>
+extern "C"
+{
+#include "../smapi/msgapi.h"
+}
 #include "ftnaddr.h"
 #include "bastypes.h"
 
