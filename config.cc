@@ -98,26 +98,28 @@ CConfig::CConfig()
 	openConfig(CONFIGDIR);
 	while ((s_Line=getLine())!="\n") 
 	{
-		if (s_Line=="") continue;
+		if (s_Line == "") continue;
+		if (s_Line[0] == ';') continue;
+
 		parm=getParam(s_Line);
 		if (parm.s_Token=="home")
 		{
 			s_Home=parm.s_RestOfLine;
 			F_Home=const_cast<char*>(s_Home.c_str());
 		}
-		if (parm.s_Token=="log")
+		else if (parm.s_Token=="log")
 		{
 			s_Log=parm.s_RestOfLine;
 		}
-		if (parm.s_Token=="outbound")
+		else if (parm.s_Token=="outbound")
 		{
 			s_Outbound=parm.s_RestOfLine;
 		}
-		if (parm.s_Token=="inbound")
+		else if (parm.s_Token=="inbound")
 		{
 			s_Inbound=parm.s_RestOfLine;
 		}
-		if (parm.s_Token=="scandir") 
+		else if (parm.s_Token=="scandir")
 		{
 			scn++;
 			CScandir scndr(parm.s_RestOfLine);
@@ -130,7 +132,7 @@ CConfig::CConfig()
 				S_Scandir[scn-1].lastMask=msk;
 			}
 		}
-		if (parm.s_Token=="mask")
+		else if (parm.s_Token=="mask")
 		{
 			msk++;
 			COperation op(parm.s_RestOfLine);
@@ -143,7 +145,7 @@ CConfig::CConfig()
 				O_Op[msk-1].lastAction=actn;
 			}
 		}
-		if (parm.s_Token=="action")
+		else if (parm.s_Token=="action")
 		{
 			actn++;
 			CAction act;
