@@ -59,7 +59,6 @@ int CArea::Open(string Path)
 	else
 	{
 		cerr << "Could not open area: \"" << Path << "\"!\n";
-		exit(0);
 		return -1;
 	}
 }
@@ -77,7 +76,6 @@ int CArea::Open()
 	else
 	{
 		cerr << "Could not open area:" << s_Path << "!\n";
-		exit(0);
 		return -1;
 	}
 }
@@ -193,7 +191,6 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		/*-------- packmail action -------*/
 		if (type=="packmail")
 		{
-		    if (Message.d_Attr & MSGSENT==MSGSENT) continue;
 		    CPackmailAction TempAction;
 		    TempAction.param=RestParam;
 		    TempAction.Area=a_Area;
