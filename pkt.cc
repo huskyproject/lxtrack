@@ -188,29 +188,29 @@ int CPkt::appendMessage()
                         dt->tm_mday, dt->tm_year, dt->tm_hour, dt->tm_min, dt->tm_sec);
         if (dt->tm_mon==11) sprintf(datetime, "%02u Dec %02u %02u:%02u:%02u",
                         dt->tm_mday, dt->tm_year, dt->tm_hour, dt->tm_min, dt->tm_sec);
-	fputs(datetime, f_pkt);
+	for (int i=0;i<20;i++) fputc(datetime[i], f_pkt);
 
 	/* write sender name */
-	if (Message.s_From.length()<36) 
+	if (Message.s_To.length()<36) 
 	{
-		fputs(Message.s_From.c_str(), f_pkt);
+		fputs(Message.s_To.c_str(), f_pkt);
 		fputc(0, f_pkt);
 	}
 	else 
 	{
-		for (int i=0;i<36;i++) fputc(Message.s_From[i], f_pkt);
+		for (int i=0;i<36;i++) fputc(Message.s_To[i], f_pkt);
 		fputc(0, f_pkt);
 	}
 	
 	/* write recipient name */
-        if (Message.s_To.length()<36) 
+        if (Message.s_From.length()<36) 
 	{
-		fputs(Message.s_To.c_str(), f_pkt);
+		fputs(Message.s_From.c_str(), f_pkt);
 		fputc(0,f_pkt);
 	}
         else
         {
-                for (int i=0;i<36;i++) fputc(Message.s_To[i], f_pkt);
+                for (int i=0;i<36;i++) fputc(Message.s_From[i], f_pkt);
                 fputc(0, f_pkt);
         }
  
@@ -255,8 +255,8 @@ int CPkt::appendMessage()
                 msgText+="\001TOPT ";
                 msgText+=topt;
 		msgText+=0x0d;
-        }
-        if (!msgText.find("INTL")==-1)
+        }*/
+        if (strstr(msgText.c_str(), "INTL ")==NULL)
         {
                 char intl[48];
                 sprintf(intl, "%i:%i/%i.%i %i:%i/%i.%i", 
@@ -265,7 +265,7 @@ int CPkt::appendMessage()
                 msgText+="\001INTL ";
                 msgText+=intl;
 		msgText+=0x0d;
-        }*/
+        }
 
 	/* write message text */
 	msgText+=Message.s_MsgText;	
