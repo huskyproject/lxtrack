@@ -35,10 +35,10 @@ HDRS=action.h area.h bastypes.h config.h ftnaddr.h global.h log.h mask.h \
 all: lxtrack$(EXE) lxtrack.1.gz
 
 .cc$(OBJ): $(HDRS)
-	$(GPP) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
+	$(CXX) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 lxtrack$(EXE): $(OBJS)
-	$(GPP) $(OBJS) $(LFLAGS) $(LOPT) -o lxtrack
+	$(CXX) $(OBJS) $(LFLAGS) $(LOPT) -o lxtrack
 
 lxtrack.1.gz: lxtrack.1
 	gzip -c lxtrack.1 > lxtrack.1.gz
