@@ -64,6 +64,7 @@ bool CMask::operator==(const CMask& msk)
 	bool frmMatch=false;
 	bool toMatch=false;
 	bool subjMatch=false;
+	bool attrMatch=true;
 	
 	/* try to determine matches simply */
 	if (msk.s_Sender == s_Sender) sndMatch=true;
@@ -97,9 +98,122 @@ bool CMask::operator==(const CMask& msk)
                         subjMatch=true;
         }
 
-	if (sndMatch && rcpMatch && frmMatch && toMatch && subjMatch) 
+	if (sndMatch && rcpMatch && frmMatch && toMatch && subjMatch && attrMatch) 
 		return true; 
 	else return false;
 
 }
 
+int CMask::parseAttr(string s_Flags)
+{
+	dword attr;
+	bool mand=false;
+	for (unsigned int i=0;i<s_Flags.size()-1;i+=2)
+	{
+		char prefix, flag;
+		prefix=s_Flags[i];
+		flag=s_Flags[i+1];
+		if (prefix=='+') mand=true;
+		if (flag=='p' || flag=='P')
+		{
+			if (mand) priv=1;
+			else priv=-1;
+		}
+                if (flag=='c' || flag=='C')
+                {
+                        if (mand) crash=1;
+                        else crash=-1;
+                }
+                if (flag=='s' || flag=='S')
+                {
+                        if (mand) sent=1;
+                        else sent=-1;
+                }
+                if (flag=='a' || flag=='A')
+                {
+                        if (mand) attach=1;
+                        else attach=-1;
+                }
+                if (flag=='i' || flag=='I')
+                {
+                        if (mand) immediate=1;
+                        else immediate=-1;
+                }
+                if (flag=='o' || flag=='O')
+                {
+                        if (mand) orphan=1;
+                        else orphan=-1;
+                }
+                if (flag=='k' || flag=='K')
+                {
+                        if (mand) kill=1;
+                        else kill=-1;
+                }
+                if (flag=='l' || flag=='L')
+                {
+                        if (mand) local=1;
+                        else local=-1;
+                }
+                if (flag=='h' || flag=='H')
+                {
+                        if (mand) hold=1;
+                        else hold=-1;
+                }
+                if (flag=='f' || flag=='F')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='n' || flag=='N')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='d' || flag=='D')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='u' || flag=='U')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='q' || flag=='Q')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='y' || flag=='Y')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='e' || flag=='E')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='m' || flag=='M')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='t' || flag=='T')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+                if (flag=='z' || flag=='Z')
+                {
+                        if (mand) file_request=1;
+                        else file_request=-1;
+                }
+	}
+	return 0;
+}
+	
+bool CMask::compareAttr(dword attr)
+{
+	return true;
+}	

@@ -195,7 +195,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		/*-------- packmail action -------*/
 		if (type=="packmail")
 		{
-		    if ((Message.d_Attr & MSGSENT) != MSGSENT) 
+		    if (((Message.d_Attr & MSGSENT) != MSGSENT) && ((Message.d_Attr & MSGLOCAL) == MSGLOCAL))
 		    {
 		       CPackmailAction TempAction;
 		       TempAction.param=RestParam;
@@ -207,7 +207,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		/*-------- movemail action -------*/
 	        if (type=="movemail")
                 {
-                    if ((Message.d_Attr & MSGSENT) != MSGSENT)
+                    if (((Message.d_Attr & MSGSENT) != MSGSENT) && ((Message.d_Attr & MSGLOCAL) == MSGLOCAL))
                     {
                        CMovemailAction TempAction;
                        TempAction.param=RestParam;
@@ -231,6 +231,14 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		    CDisplayAction TempAction;
 		    TempAction.param=RestParam;
 		    TempAction.run();
+		}
+		
+		/*------- semaphore action ----------*/
+		if (type=="semaphore")
+		{
+		    CSemaphoreAction TempAction;
+		    TempAction.param=RestParam;
+	            TempAction.run();
 		}
 		num++;
              }

@@ -112,22 +112,9 @@ int CBounceAction::run()
 	}
 
 	/*------ replace macros with real fields -----*/
-		
-	s_BounceText.replace(s_BounceText.find("%from"), 5, Message.s_From);
+	int pos;
 
-	s_BounceText.replace(s_BounceText.find("%to"), 3, Message.s_To);
-
-	s_BounceText.replace(s_BounceText.find("%subj"), 5, Message.s_Subject);
-
-	string s_FirstFrom;
-	int n=0;
-	while (Message.s_From[n]!=' ') s_FirstFrom+=Message.s_From[n++];
-	s_BounceText.replace(s_BounceText.find("%ffrom"), 6, s_FirstFrom);
-
-        string s_FirstTo;
-        n=0;
-        while (Message.s_To[n]!=' ') s_FirstTo+=Message.s_To[n++];
-        s_BounceText.replace(s_BounceText.find("%fto"), 6, s_FirstTo);
+/* TODO: Add code for replacing bounce text fields with real values */
 
 	/*------- write message ----------*/
         time(&tm);
@@ -232,26 +219,26 @@ int CPackmailAction::run()
 	while (temp[0]==' ') temp.erase(0,1);
         do
         {
-	   if (temp[0]==(*temp.end()))
+/*	   if (temp[0]==(*temp.end()))
 	   {
 		string logstr="Invalid packmail statement while processing from-address!";
 		log->add(5, logstr);
 		cerr << logstr << endl;
 		exit(0);
-	   }
+	   }*/
            fromnode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
         while (temp[0]==' ') temp.erase(0,1);
         do
         {
-           if (temp[0]==(*temp.end()))
+/*           if (temp[0]==(*temp.end()))
            {
                 string logstr="Invalid packmail statement while processing uplink!";
                 log->add(5, logstr);
                 cerr << logstr << endl;
                 exit(0);
-           }
+           }*/
            tonode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
@@ -398,3 +385,12 @@ int CDisplayAction::run()
 	log->add(2, param);
 	return 0;
 }
+
+int CSemaphoreAction::run()
+{
+	f_semFile=fopen(param.c_str(), "w");
+	fclose(f_semFile);
+	return 0;
+}
+
+

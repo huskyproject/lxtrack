@@ -191,7 +191,11 @@ int CPkt::appendMessage()
 	fputs(datetime, f_pkt);
 
 	/* write sender name */
-	if (Message.s_From.length()<36) fputs(Message.s_From.c_str(), f_pkt);
+	if (Message.s_From.length()<36) 
+	{
+		fputs(Message.s_From.c_str(), f_pkt);
+		fputc(0, f_pkt);
+	}
 	else 
 	{
 		for (int i=0;i<36;i++) fputc(Message.s_From[i], f_pkt);
@@ -199,7 +203,11 @@ int CPkt::appendMessage()
 	}
 	
 	/* write recipient name */
-        if (Message.s_To.length()<36) fputs(Message.s_To.c_str(), f_pkt);
+        if (Message.s_To.length()<36) 
+	{
+		fputs(Message.s_To.c_str(), f_pkt);
+		fputc(0,f_pkt);
+	}
         else
         {
                 for (int i=0;i<36;i++) fputc(Message.s_To[i], f_pkt);
@@ -207,7 +215,11 @@ int CPkt::appendMessage()
         }
  
 	/* write subject line */
-        if (Message.s_Subject.length()<72) fputs(Message.s_Subject.c_str(), f_pkt);
+        if (Message.s_Subject.length()<72) 
+	{
+		fputs(Message.s_Subject.c_str(), f_pkt);
+		fputc(0, f_pkt);
+	}
         else
         {
                 for (int i=0;i<72;i++) fputc(Message.s_Subject[i], f_pkt);
@@ -218,26 +230,34 @@ int CPkt::appendMessage()
 	string msgText;
 	/* TODO: check if kludges are already present, when exporting */	
 	/* if neccessary write point and zone info */
-	msgText+=Message.s_Ctrl;
+	msgText+="\001";
+	for (unsigned int i=1;i<Message.s_Ctrl.length();i++)
+	{
+		if (Message.s_Ctrl[i]!='\001')
+			msgText+=Message.s_Ctrl[i];
+		else 
+			msgText+="\r\001";
+	}
+	msgText+='\r';
 	if (msgText[msgText.length()-1]!='\0') msgText.erase(msgText.length()-1,1);
 /*	if ((Message.F_From.point!=0) && (msgText.find("FMPT")==-1))
-	{*/
+	{
 		char fmpt[6];
 		sprintf(fmpt, "%i", Message.F_From.point);
 		msgText+="\001FMPT ";
 		msgText+=fmpt;
 		msgText+=0x0d;
-//	}
-/*        if ((Message.F_To.point!=0) && !msgText.find("TOPT")==-1)
-        {*/
+	}
+        if ((Message.F_To.point!=0) && !msgText.find("TOPT")==-1)
+        {
                 char topt[6];
                 sprintf(topt, "%i", Message.F_To.point);
                 msgText+="\001TOPT ";
                 msgText+=topt;
 		msgText+=0x0d;
-//        }
-//        if (!msgText.find("INTL")==-1)
-//        {
+        }
+        if (!msgText.find("INTL")==-1)
+        {
                 char intl[48];
                 sprintf(intl, "%i:%i/%i.%i %i:%i/%i.%i", 
 			Message.F_From.zone, Message.F_From.net, Message.F_From.node, Message.F_From.point,
@@ -245,7 +265,7 @@ int CPkt::appendMessage()
                 msgText+="\001INTL ";
                 msgText+=intl;
 		msgText+=0x0d;
-//        }
+        }*/
 
 	/* write message text */
 	msgText+=Message.s_MsgText;	
