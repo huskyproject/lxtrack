@@ -11,10 +11,11 @@ int initApi()
 {
 	struct _minf m;
 	m.req_version = 0;
-   m.def_zone = 2;
-   if (MsgOpenApi(&m) != 0) {
-      exit(1);
-   }
+        m.def_zone = cfg->F_Home.zone;
+        if (MsgOpenApi(&m) != 0) 
+	{
+        	exit(1);
+   	}
 	return 0;
 }
 
@@ -58,6 +59,7 @@ int CArea::Open(string Path)
 	}
 	else
 	{
+		a_Area=NULL;
 		cerr << "Could not open area: \"" << Path << "\"!\n";
 		return -1;
 	}
@@ -75,6 +77,7 @@ int CArea::Open()
 	}
 	else
 	{
+		a_Area=NULL;
 		cerr << "Could not open area:" << s_Path << "!\n";
 		return -1;
 	}
@@ -105,17 +108,16 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
    CMask actualMask;
    int num=1;
    int result;
-        
    for (unsigned int i=1;i<i_msgNum+1;i++)
    {
        result=Message.Open(i, a_Area);
        if (result==-1)
        {
 	  continue;
-	}
+       }
        for (unsigned int j=start;j<stop+1;j++)
-       {	
-          actualMask=Message.GetMask();
+       {
+	  actualMask=Message.GetMask();
 	  /*------------ scan for matching mask ---------------*/
 	  if (M_ScanFor[j].M_Mask==actualMask) 
     	  {
@@ -127,6 +129,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 	        string type;
 		string RestParam;
 		string temp;
+
 		/*------ write action data to vars -------*/
 		temp=A_Execute[k].param;
         	while (temp[0]==' ') temp.erase(0,1);
@@ -140,6 +143,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
         	RestParam=temp;
 		char number[6];
 		sprintf(number, "%i", i);
+
 		/*----- action file -----*/
 		if (type=="file")
 		{
@@ -212,7 +216,16 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
                        TempAction.run();
                     }
                 }
-
+		/*-------- rewrite action -----------*/
+		if (type=="rewrite")
+		{
+		    CRewriteAction TempAction;
+		    TempAction.param=RestParam;
+		    TempAction.Area=a_Area;
+		    TempAction.msgnum=i;
+		    TempAction.run();
+		}
+		/*--------- display action ----------*/
 		if (type=="display")
 		{
 		    CDisplayAction TempAction;
@@ -221,8 +234,8 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		}
 		num++;
              }
+	     Message.Close();
 	  }
-      Message.Close();
       }
    }
 	return 0;

@@ -232,12 +232,26 @@ int CPackmailAction::run()
 	while (temp[0]==' ') temp.erase(0,1);
         do
         {
+	   if (temp[0]==(*temp.end()))
+	   {
+		string logstr="Invalid packmail statement while processing from-address!";
+		log->add(5, logstr);
+		cerr << logstr << endl;
+		exit(0);
+	   }
            fromnode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
         while (temp[0]==' ') temp.erase(0,1);
         do
         {
+           if (temp[0]==(*temp.end()))
+           {
+                string logstr="Invalid packmail statement while processing uplink!";
+                log->add(5, logstr);
+                cerr << logstr << endl;
+                exit(0);
+           }
            tonode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
@@ -279,18 +293,42 @@ int CMovemailAction::run()
         while (temp[0]==' ') temp.erase(0,1);
         do
         {
-           fromnode+=temp[0];
+           if (temp[0]==(*temp.end()))
+           {
+                string logstr="Invalid movemail statement! ToNode not specified";
+                log->add(5, logstr);
+                cerr << logstr << endl;
+                exit(0);
+           }
+           
+	   fromnode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
         while (temp[0]==' ') temp.erase(0,1);
         do
         {
+           if (temp[0]==(*temp.end()))
+           {
+                string logstr="Invalid movemail statement! FromNode not specified";
+                log->add(5, logstr);
+                cerr << logstr << endl;
+                exit(0);
+           }
+
            tonode+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
         while(temp[0]==' ') temp.erase(0,1);
         do
         {
+           if (temp[0]==(*temp.end()))
+           {
+                string logstr="Invalid movemail statement! wrong directory";
+                log->add(5, logstr);
+                cerr << logstr << endl;
+                exit(0);
+           }
+
            dir+=temp[0];
            temp.erase(0,1);
         } while (temp[0]!=' ');
@@ -323,6 +361,38 @@ int CMovemailAction::run()
         return 0;
 }
 
+int CRewriteAction::run()
+{
+	CMask newMask;
+	newMask=param;
+	CMsg Message;
+	Message.Open(msgnum, Area);
+	/* change sender */
+	if (newMask.s_Sender[0]!='*')
+		Message.s_From=newMask.s_Sender;
+	/* change recipient */
+	if (newMask.s_Recipient[0]!='*') 
+		Message.s_To=newMask.s_Recipient;
+	/* change fromA */
+	char *eaddr=new char[24];
+	strcpy(eaddr,"65535:65535/65535.65535");
+	if (newMask.F_From==eaddr) {}
+	else 
+		Message.F_From=newMask.F_From;
+        /* change toA */
+        if (newMask.F_To==eaddr) {}
+	else
+                Message.F_To=newMask.F_To;
+ 
+       /* change subject */
+        if (newMask.s_Subject[0]!='*')
+                Message.s_Subject=newMask.s_Subject;
+	Message.Write();
+	Message.Close();
+	delete eaddr;
+	return 0;
+}
+ 
 int CDisplayAction::run()
 {
 	log->add(2, param);
