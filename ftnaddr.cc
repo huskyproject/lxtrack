@@ -74,7 +74,10 @@ CFtnAddr::CFtnAddr(char *str)
                         point=65535;
         }
         else
+	{
+		point=0;
                 return;
+	}
 
 }
 
@@ -142,8 +145,9 @@ CFtnAddr CFtnAddr::parseFromStr(char * str)
         }
         else
                 return NULL;
-		  strcpy(buf,strbuf);
-        if (buf!=NULL)
+	strcpy(buf,strbuf);
+        
+	if (buf!=NULL)
         {
                 if (strstr(buf, "*") == NULL)
                         point=atoi(buf);
@@ -151,7 +155,10 @@ CFtnAddr CFtnAddr::parseFromStr(char * str)
                         point=65535;
         }
         else
-                return NULL;
+	{
+		point=0;
+                return (*this);
+	}
 	return (*this);
 }
 
