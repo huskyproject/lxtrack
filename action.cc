@@ -226,7 +226,6 @@ int CPackmailAction::run()
 {
 	CPkt pkt;
 	string fromnode, tonode, passwd;
-
         string temp=param;
 	while (temp[0]==' ') temp.erase(0,1);
         do
@@ -239,15 +238,22 @@ int CPackmailAction::run()
         {
            tonode+=temp[0];
            temp.erase(0,1);
-        } while (temp[0]!=' ');
+        } while (temp[0]!=' ' || temp[0]!='\n');
 	while(temp[0]==' ') temp.erase(0,1);
 	passwd=temp;
-
+	string logstr="Packed message";
+	log->add(2, logstr);
 	pkt.fromNode=const_cast<char*>(fromnode.c_str());
 	pkt.toNode=const_cast<char*>(tonode.c_str());
 	pkt.password=passwd;
 	pkt.Message.Open(msgnum, Area);
 	pkt.create();
 	pkt.Message.Close();
+	return 0;
+}
+
+int CDisplayAction::run()
+{
+	log->add(2, param);
 	return 0;
 }

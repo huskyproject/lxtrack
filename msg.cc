@@ -36,7 +36,6 @@ int CMsg::Open(int i_num, HAREA area)
 	if (hmsg==NULL) 
 	{
 		cerr << "could not open message" << endl;
-		exit(0);
 	}
 	i_CtrlLen=MsgGetCtrlLen(hmsg);
 	i_TextLen = MsgGetTextLen(hmsg);
@@ -50,6 +49,7 @@ int CMsg::Open(int i_num, HAREA area)
 	s_Subject=(char *)xmsg.subj;
 	F_From=xmsg.orig;
 	F_To=xmsg.dest;
+	d_Attr=xmsg.attr;
 	i_number=i_num;
 	delete [] buf1;
 	delete [] buf2;
