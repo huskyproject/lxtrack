@@ -1,11 +1,20 @@
 # Makefile for DEC Unix with vendor Cxx Version 6.0
 
+# include Husky-Makefile-Config
+include ../../huskymak.cfg
+
 CC=cxx
 CFLAGS=
 CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\" -DIS_NOTGCC
+
 # -g cannot be combined with -O3, so rebuild if you make a release!
-COPT=-g
-LOPT=-L/home/fido/lib
+ifeq ($(DEBUG), 1)
+  COPT=-g
+else
+  COPT=-s
+endif
+
+LOPT=-L$(LIBDIR)
 
 TARGET= lxtrack
 
@@ -23,17 +32,20 @@ OBJS=	action.o  \
 	pkt.o     \
         strsep.o  
 
+all: lxtrack
+
 .cc.o:
 	$(CC) $(CFLAGS) $(CDEFS) $(LOPT) $(COPT) -c $< -o $@
 
-debug: $(OBJS)
-	$(CC) $(OBJS) $(LOPT) -l$(SMAPI) -g -o lxtdbg
-
-release: $(OBJS)
-	$(CC) $(OBJS) $(LOPT) -l$(SMAPI) -s -o lxtrack
+lxtrack: $(OBJS)
+	$(CC) $(OBJS) $(LOPT) $(COPT) -l$(SMAPI) -o lxtrack
 
 clean:
-	rm *.o 
+	rm *.o core
 
-distclean:
-	rm *.o core lxtdbg lxtrack
+distclean: clean
+	rm lxtrack
+
+install: lxtrack
+	install $(IBOPT) lxtrack $(BINDIR)
+
