@@ -24,7 +24,6 @@ class CArea
 		int		Open();
 		int 		Close();
 		int		Scan(vector<COperation> M_ScanFor, vector<CAction> Execute, unsigned int start, unsigned int stop);
-		int 		ExAction(vector<CAction> A_ToExec, vector<int> &i_match, unsigned int start, unsigned int stop);
 		HAREA		GetArea();
 		CArea();
 		CArea(const CArea& ar);

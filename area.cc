@@ -125,7 +125,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		/*------ write action data to vars -------*/
 		temp=A_Execute[k].param;
         	while (temp[0]==' ') temp.erase(0,1);
-	        if (temp[temp.size()]=='\n') temp.erase(temp.size(), 1);
+	        if (temp[temp.length()-1]=='\n') temp.erase(temp.length()-1, 1);
         	do
         	{
                    type+=temp[0];
@@ -183,7 +183,15 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
                    TempAction.msgnum=i;
                    TempAction.run();
                 }
-
+		/*-------- packmail action -------*/
+		if (type=="packmail")
+		{
+		    CPackmailAction TempAction;
+		    TempAction.param=RestParam;
+		    TempAction.Area=a_Area;
+		    TempAction.msgnum=i;
+		    TempAction.run();
+		}
 		num++;
              }
 	  }
@@ -193,39 +201,4 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 	return 0;
 }
 
-int CArea::ExAction(vector<CAction> A_ToExec, vector<int> &i_match, unsigned int start, unsigned int stop)
-{
-	unsigned int i;
-	unsigned int j;
-	char * buf=new char[48];
-	char * buf2= new char[48];
-
-	for (i=start;i<stop+1;i++)
-	{
-		strcpy(buf,const_cast<char*>(A_ToExec[i].param.c_str()));
-		buf2=strsep(&buf, " ");
-		string type=buf2;
-		if (type=="copy") cout << "copying message" << endl;
-		if (type=="move") cout << "moving message" << endl;
-		if (type=="delete") cout << "deleting message" << endl;
-		if (type=="file")
-		{
-			CFileAction TempAction;
-			cout << "about to loop!" << endl;
-			cout << "size: " << i_match.size() << endl;
-			for (j=0;j<i_match.size();j++)
-			{
-				cout << "start looping";
-				TempAction.s_Filename=buf;
-				TempAction.s_Filename+=j;
-				TempAction.msgnum=i_match[j];
-				TempAction.Area=a_Area;
-				TempAction.run();
-				cout << "filing" << endl;
-			}
-		}
-		if (type=="rewrite") cout << "rewriting message" << endl;
-	}
-	return 0;
-} 
 

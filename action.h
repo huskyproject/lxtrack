@@ -180,7 +180,7 @@ class CIgnoreAction:public CAction
 		int run();
 };
 
-class CPackMailAction:public CAction
+class CPackmailAction:public CAction
 {
 	public:
 		CFtnAddr F_From;
@@ -191,7 +191,7 @@ class CPackMailAction:public CAction
 		FILE *f_pkt;
 };
 
-class CMoveMailAction:public CAction
+class CMovemailAction:public CAction
 {
 	public:
 		CFtnAddr F_From;
