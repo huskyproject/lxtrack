@@ -1,2 +1,2 @@
-#define PRGNAME "lxtrack"
-#define VERSION "0.1"
+#define PRGNAME "LxTrack/LNX"
+#define VERSION "0.01"

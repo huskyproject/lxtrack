@@ -2,6 +2,7 @@
 #define _MSG_H_
 #include <string>
 #include "area.h"
+#include "bastypes.h"
 
 class CMsg
 {
@@ -20,7 +21,7 @@ class CMsg
 		int 	i_CtrlLen;
 		int 	i_TextLen;
 		long	i_Size;
-		int i_number;
+		int 	i_number;
 		
 		/* methods */
 		CMsg();

@@ -135,8 +135,9 @@ int CMsg::Close()
 int CMsg::Delete(HAREA Area)
 {
 	if (hmsg!=NULL) {
-		MsgCloseMsg(hmsg);
 		MsgKillMsg(Area, i_number);
+/*		MsgCloseMsg(hmsg);
+		MsgKillMsg(Area, i_number);*/
 	}
 	return 0;
 }
