@@ -55,3 +55,7 @@ install: lxtrack$(EXE)
 	$(INSTALL) $(IBOPT) lxtrack$(EXE) $(BINDIR)
 	$(INSTALL) $(IMOPT) lxtrack.1.gz $(MANDIR)/man1
 
+uninstall:
+	-$(RM) $(BINDIR)$(DIRSEP)lxtrack$(EXE) 
+	-$(RM) $(MANDIR)$(DIRSEP)man1$(DIRSEP)lxtrack.1.gz 
+
