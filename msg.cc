@@ -109,6 +109,7 @@ int CMsg::Write()
         xmsg.dest.net=F_To.net;
         xmsg.dest.node=F_To.node;
         xmsg.dest.point=F_To.point;
+	xmsg.attr=d_Attr;
 	i_TextLen=s_MsgText.length()+1;
 	i_CtrlLen=s_Ctrl.length()+1;
 	MsgWriteMsg(hmsg, 0, &xmsg, const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>(s_MsgText.c_str())), i_TextLen, i_TextLen+i_CtrlLen, i_CtrlLen, const_cast<char*>(s_Ctrl.c_str()));

@@ -13,7 +13,7 @@ class CPkt
 	   CFtnAddr toNode;
 	   CFtnAddr fromNode;
 	   string password;
-	   
+	   string dir;	   
 	   int create();
 	protected:
 	   FILE *f_pkt;

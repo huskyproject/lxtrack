@@ -3,6 +3,7 @@
 
 #include "global.h"
 #include "pkt.h"
+#include "version.h"
 extern "C" 
 {
 #include "../smapi/progprot.h"
@@ -15,7 +16,8 @@ int CPkt::openPkt()
 	string completename;
 	char name[9];
 	sprintf(name, "%04x%04x.out", toNode.net, toNode.node);
-	completename=cfg->s_Outbound + '/' + name;
+	if (dir=="") completename=cfg->s_Outbound + '/' + name;
+	else completename=dir + '/' + name;
 	f_pkt=fopen(completename.c_str(), "r");
 	if (f_pkt==NULL) newPkt=true;
 	else
@@ -96,7 +98,11 @@ int CPkt::writeHeader()
 	
 	/* write CW copy */
 	int capabilityWord=1;
-	fwrite(&capabilityWord, 2, 1, f_pkt);
+	int dummy=capabilityWord / 256;
+	fputc(dummy, f_pkt);
+	dummy= capabilityWord%256;
+	fputc(dummy, f_pkt);
+//	fwrite(&capabilityWord, 2, 1, f_pkt);
 
 	/* write high-order productCode and minor revision */
 	fputc(h_pcode, f_pkt);
@@ -243,7 +249,13 @@ int CPkt::appendMessage()
 
 	/* write message text */
 	msgText+=Message.s_MsgText;	
+	char buf[128];
+        sprintf(buf, "\001Via %u:%u/%u.%u @%04u%02u%02u.%02u%02u%02u.UTC %s %s",
+           Message.F_From.zone, Message.F_From.net, Message.F_From.node, Message.F_From.point,
+           dt->tm_year + 1900, dt->tm_mon + 1, dt->tm_mday, dt->tm_hour+1, dt->tm_min, dt->tm_sec, PRGNAME, VERSION);
  	
+	msgText+=buf;
+	
 	fputs(msgText.c_str(), f_pkt);
 	/* write two \0 */
 	fputc(0, f_pkt);

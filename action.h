@@ -185,7 +185,6 @@ class CPackmailAction:public CAction
 	public:
 		CFtnAddr F_From;
 		CFtnAddr F_To;
-		string 	s_passwd;
 		int run();
 	protected:
 		FILE *f_pkt;
@@ -196,8 +195,6 @@ class CMovemailAction:public CAction
 	public:
 		CFtnAddr F_From;
 		CFtnAddr F_To;
-		string 	s_passwd;
-		string	s_Path;
 		int run();
 	protected:
 		FILE *f_pkt;

@@ -106,7 +106,7 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
    int num=1;
    int result;
         
-   for (unsigned int i=1;i<i_msgNum;i++)
+   for (unsigned int i=1;i<i_msgNum+1;i++)
    {
        result=Message.Open(i, a_Area);
        if (result==-1)
@@ -191,12 +191,28 @@ int CArea::Scan(vector<COperation> M_ScanFor, vector<CAction> A_Execute, unsigne
 		/*-------- packmail action -------*/
 		if (type=="packmail")
 		{
-		    CPackmailAction TempAction;
-		    TempAction.param=RestParam;
-		    TempAction.Area=a_Area;
-		    TempAction.msgnum=i;
-		    TempAction.run();
+		    if ((Message.d_Attr & MSGSENT) != MSGSENT) 
+		    {
+		       CPackmailAction TempAction;
+		       TempAction.param=RestParam;
+		       TempAction.Area=a_Area;
+		       TempAction.msgnum=i;
+		       TempAction.run();
+		    }
 		}
+		/*-------- movemail action -------*/
+	        if (type=="movemail")
+                {
+                    if ((Message.d_Attr & MSGSENT) != MSGSENT)
+                    {
+                       CMovemailAction TempAction;
+                       TempAction.param=RestParam;
+                       TempAction.Area=a_Area;
+                       TempAction.msgnum=i;
+                       TempAction.run();
+                    }
+                }
+
 		if (type=="display")
 		{
 		    CDisplayAction TempAction;
