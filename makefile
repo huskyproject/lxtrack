@@ -22,7 +22,7 @@ OBJS=	action.o  \
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 debug: $(OBJS)
-	$(CC) $(OBJS) -l$(SMAPI) -ggdb -o lxtdbg
+	$(CC) $(OBJS) -l$(SMAPI) -g -o lxtdbg
 
 release: $(OBJS)
 	$(CC) $(OBJS) -l$(SMAPI) -s -o lxtrack

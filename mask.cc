@@ -64,6 +64,8 @@ bool CMask::operator==(const CMask& msk)
 	bool frmMatch=false;
 	bool toMatch=false;
 	bool subjMatch=false;
+	
+	/* try to determine matches simply */
 	if (msk.s_Sender == s_Sender) sndMatch=true;
 	if (s_Sender=="*") sndMatch=true;
 	if (msk.s_Recipient == s_Recipient) rcpMatch=true;
@@ -72,7 +74,31 @@ bool CMask::operator==(const CMask& msk)
 	if (F_To == msk.F_To) toMatch=true;
 	if (msk.s_Subject == s_Subject) subjMatch=true;
 	if (s_Subject=="*") subjMatch=true;
-	if (sndMatch && rcpMatch && frmMatch && toMatch && subjMatch) return true; 
+	
+	/* do dirty checking with ~ */
+	if (strstr(s_Sender.c_str(), "~")!=NULL)
+	{
+		s_Sender.erase(s_Sender.find("~"), 1);
+		if (strstr(msk.s_Sender.c_str(), s_Sender.c_str())!=NULL)
+			sndMatch=true;
+	}
+
+        if (strstr(s_Sender.c_str(), "~")!=NULL)
+        {
+                s_Recipient.erase(s_Recipient.find("~"), 1);
+                if (strstr(msk.s_Recipient.c_str(), s_Recipient.c_str())!=NULL)
+                        rcpMatch=true;
+        }
+
+        if (strstr(s_Subject.c_str(), "~")!=NULL)
+        {
+                s_Subject.erase(s_Subject.find("~"), 1);
+                if (strstr(msk.s_Subject.c_str(), s_Subject.c_str())!=NULL)
+                        subjMatch=true;
+        }
+
+	if (sndMatch && rcpMatch && frmMatch && toMatch && subjMatch) 
+		return true; 
 	else return false;
 
 }

@@ -15,9 +15,9 @@ int main()
 {
 	int result;
 	cout << "LxTrack" << " " << VERSION << endl;
-	initApi();
 	cfg = new CConfig;
 	log = new CLog(cfg->s_Log);
+	initApi();
 	log->intro();
 	for (unsigned int i=0;i<cfg->S_Scandir.size();i++)
 	{
@@ -31,7 +31,10 @@ int main()
 			continue;
 		}
 		else 
-		cfg->S_Scandir[i].A_Area.Scan(cfg->O_Op, cfg->A_Action, cfg->S_Scandir[i].firstMask, cfg->S_Scandir[i].lastMask);
+		{
+		   cfg->S_Scandir[i].A_Area.Scan(cfg->O_Op, cfg->A_Action, cfg->S_Scandir[i].firstMask, cfg->S_Scandir[i].lastMask);
+		   cfg->S_Scandir[i].A_Area.Close();
+		}
 	}
 	closeApi();
 	delete cfg;

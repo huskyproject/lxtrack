@@ -36,6 +36,7 @@ int CMsg::Open(int i_num, HAREA area)
 	if (hmsg==NULL) 
 	{
 		cerr << "could not open message" << endl;
+		return -1;
 	}
 	i_CtrlLen=MsgGetCtrlLen(hmsg);
 	i_TextLen = MsgGetTextLen(hmsg);
