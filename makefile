@@ -1,7 +1,7 @@
 CC= g++
 CFLAGS=	-Wall -s
 CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\"
-COPT=   -O3 -m486 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations -g
+COPT=   -O3 -m486 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations 
 
 TARGET= lxtrack
 
@@ -15,13 +15,14 @@ OBJS=	action.o  \
 	log.o     \
 	lxtrack.o \
 	mask.o    \
-	msg.o     
+	msg.o     \
+	pkt.o
 
 .cc.o:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 debug: $(OBJS)
-	$(CC) $(OBJS) -l$(SMAPI) -o lxtdbg
+	$(CC) $(OBJS) -l$(SMAPI) -ggdb -o lxtdbg
 
 release: $(OBJS)
 	$(CC) $(OBJS) -l$(SMAPI) -s -o lxtrack

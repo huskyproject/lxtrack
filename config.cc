@@ -97,6 +97,7 @@ CConfig::CConfig()
 		if (parm.s_Token=="home")
 		{
 			s_Home=parm.s_RestOfLine;
+			F_Home=const_cast<char*>(s_Home.c_str());
 		}
 		if (parm.s_Token=="log")
 		{

@@ -1,3 +1,11 @@
+Sat, 21.11.1998
+---------------
+- packmail works more or less (no support for multiple messages per packet yet)
+
+Fri, 20.11.1998
+---------------
+- started implementing packmail action
+
 Thu, 19.11.1998
 ---------------
 - keywords no longer case-sensitive
