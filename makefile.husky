@@ -2,13 +2,14 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  CFLAGS=	-Wall -ggdb -I../smapi -I$(INCDIR)
+  CFLAGS=	$(WARNFLAGS) $(DEBCFLAGS) -I../smapi -I$(INCDIR)
+  LFLAGS= $(DEBLFLAGS)
 else
-  CFLAGS=	-Wall -s -I../smapi -I$(INCDIR)
+  CFLAGS=	$(WARNFLAGS) $(OPTCFLAGS) -s -I../smapi -I$(INCDIR)
+  LFLAGS= $(OPTLFLAGS)
 endif
 
 CDEFS=-D$(OSTYPE) -DCONFIGDIR=\"lxtrack.cfg\" $(ADDCDEFS)
-COPT=-O3 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations
 
 ifeq ($(SHORTNAME), 1)
   LOPT= -L$(LIBDIR) -lsmapi
@@ -34,7 +35,7 @@ all: lxtrack$(EXE)
 	$(GPP) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 lxtrack: $(OBJS)
-	$(GPP) $(OBJS) $(CFLAGS) $(LOPT) -o lxtrack
+	$(GPP) $(OBJS) $(LFLAGS) $(LOPT) -o lxtrack
 
 clean:
 	-$(RM) *$(OBJ)
