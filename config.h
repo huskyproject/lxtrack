@@ -21,6 +21,7 @@ class CConfig
 {
 	public:
 		CConfig();
+		CFtnAddr F_Home;
 		string s_Home;
 		string s_Outbound;
 		string s_Inbound;

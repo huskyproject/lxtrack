@@ -22,7 +22,7 @@ class CMsg
 		int 	i_TextLen;
 		long	i_Size;
 		int 	i_number;
-		
+		char ftsc_date[20];
 		/* methods */
 		CMsg();
 		CMsg(int i_num);
