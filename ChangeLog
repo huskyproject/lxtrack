@@ -1,3 +1,10 @@
+2004-12-20 Monday 11:25  os2tobi
+
+	* action.cc (1.8), area.cc (1.7), mask.cc (1.5): Patches by
+	Stanislav Mekhanoshin:
+	
+	1) a lot of quick bugs fixed 2) "delete" action supported
+
 2002-07-31 Wednesday 12:02  gerrit
 
 	* Makefile (1.6): Changed $(GPP) to $(CXX) according to recent
