@@ -1,5 +1,5 @@
 CC= g++
-CFLAGS=	-Wall -s
+CFLAGS=	-Wall -ggdb
 CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\"
 COPT=   -O3 -m486 -fomit-frame-pointer -fstrength-reduce -fexpensive-optimizations 
 
@@ -23,7 +23,7 @@ OBJS=	action.o  \
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@
 
 debug: $(OBJS)
-	$(CC) $(OBJS) -l$(SMAPI) -g -o lxtdbg
+	$(CC) $(OBJS) -l$(SMAPI) -g -o lxtdbg -L../smapi
 
 release: $(OBJS)
 	$(CC) $(OBJS) -l$(SMAPI) -s -o lxtrack
