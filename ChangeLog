@@ -1,31 +1,31 @@
-2002-07-31 Wednesday 14:02  gerrit
+2002-07-31 Wednesday 05:02  gerrit
 
 	* Makefile (1.6): Changed $(GPP) to $(CXX) according to recent
 	huskymak.cfg.
 
-2002-07-31 Wednesday 14:01  gerrit
+2002-07-31 Wednesday 05:01  gerrit
 
 	* .cvs2cl (1.1): Enabling automatic generation of ChangeLog.
 
-2000-12-03 Sunday 18:59  sms
+2000-12-03 Sunday 09:59  sms
 
 	* Makefile (1.5): using RMOPT from huskymak.cfg
 
-2000-08-21 Monday 15:15  sms
+2000-08-21 Monday 06:15  sms
 
 	* Makefile (1.4): added target uninstall
 
-2000-04-21 Friday 13:14  sms
+2000-04-21 Friday 04:14  sms
 
 	* Makefile (1.3), makefile.husky (1.6): renamed makefile.husky to
 	Makefile
 
-2000-03-27 Monday 15:51  sms
+2000-03-27 Monday 05:51  sms
 
 	* lxtrack.1 (1.1), lxtrack.1.gz (1.2): changed lxtrack.1.gz to
 	lxtrack.1
 
-2000-03-27 Monday 15:50  sms
+2000-03-27 Monday 05:50  sms
 
 	* CHANGELOG (1.10), action.cc (1.7), area.cc (1.6), config.cc
 	(1.4), ftnaddr.cc (1.6), ftnaddr.h (1.4), makefile.husky (1.5),
@@ -35,58 +35,58 @@
 	of trying to read every mail   between 1 and the highest msg -
 	implemented address wildcards
 
-2000-03-22 Wednesday 04:06  sms
+2000-03-21 Tuesday 19:06  sms
 
 	* CHANGELOG (1.9), config.cc (1.3): config parser speedup
 
-2000-03-13 Monday 23:47  sms
+2000-03-13 Monday 14:47  sms
 
 	* makefile.lnx (1.4), makefile.osf (1.4): updated legacy makefiles
 
-2000-03-09 Thursday 17:27  sms
+2000-03-09 Thursday 08:27  sms
 
 	* action.h (1.2), area.h (1.3), makefile.husky (1.4), mask.h (1.4):
 	moved smapi and fidoconfig headers to INCDIR/smapi and
 	INCDIR/fidoconfig
 
-2000-03-07 Tuesday 17:31  tobi
+2000-03-07 Tuesday 08:31  tobi
 
 	* makefile.husky (1.3): Makefile changes
 
-2000-01-28 Friday 14:57  sms
+2000-01-28 Friday 05:57  sms
 
 	* makefile.lnx (1.3): removed huskymak.cfg dependency from
 	makefile.lnx, created/updated makefile.husky for pascal programs
 
-2000-01-23 Sunday 00:42  sms
+2000-01-22 Saturday 15:42  sms
 
 	* makefile.husky (1.2): Updated makefile.husky and huskymak.cfg
 
-2000-01-22 Saturday 12:00  sms
+2000-01-22 Saturday 03:00  sms
 
 	* makefile.husky (1.1): Created/Updated makefile.husky and
 	huskymak.cfg
 
-1999-10-25 Monday 01:10  sms
+1999-10-24 Sunday 16:10  sms
 
 	* makefile.lnx (1.2), makefile.osf (1.3): corrected path to
 	huskymak.cfg
 
-1999-10-14 Thursday 18:07  sms
+1999-10-14 Thursday 09:07  sms
 
 	* makefile (1.6), makefile.lnx (1.1): reorganized Makefiles, read
 	husky-common/README.Makefiles \!\!\!
 
-1999-10-14 Thursday 17:40  sms
+1999-10-14 Thursday 08:40  sms
 
 	* CHANGELOG (1.8), makefile.osf (1.2): reorganized Makefiles, read
 	husky-common/README.Makefiles \!\!\!
 
-1999-09-23 Thursday 23:15  mt
+1999-09-23 Thursday 14:15  mt
 
 	* makefile (1.5), strsep.h (1.1): added missing strsep.h
 
-1999-09-04 Saturday 20:09  tobi
+1999-09-04 Saturday 11:09  tobi
 
 	* action.cc (1.6), area.cc (1.5), area.h (1.2), bastypes.h (1.2),
 	config.cc (1.2), config.h (1.2), ftnaddr.cc (1.5), ftnaddr.h (1.3),
@@ -95,68 +95,68 @@
 	pkt.cc (1.6), pkt.h (1.2), strsep.cc (1.1): Portability changes.
 	Now lxtrack compiles with DEC CXX on OSF/1 (Tru64 Unix)
 
-1999-05-30 Sunday 21:52  mm
+1999-05-30 Sunday 12:52  mm
 
 	* CHANGELOG (1.7), README (1.2), action.cc (1.5), ftnaddr.cc (1.4),
 	ftnaddr.h (1.2), mask.h (1.3): rewrite CFtnAddr
 
-1999-03-22 Monday 16:22  mm
+1999-03-22 Monday 07:22  mm
 
 	* action.cc (1.4), area.cc (1.4), log.cc (1.2), lxtrack.cc (1.2),
 	msg.cc (1.3): Fixed some bugs Should work with <iostream.h> now.
 	Just add -DIS_OLDGCC in Makefile
 
-1999-02-12 Friday 19:08  mm
+1999-02-12 Friday 10:08  mm
 
 	* CHANGELOG (1.6), area.cc (1.3), makefile (1.3): Mainly cosmetical
 	changes...
 
-1998-12-18 Friday 21:15  mm
+1998-12-18 Friday 12:15  mm
 
 	* ACTIONS (1.4), BUGS (1.3), CHANGELOG (1.5), action.cc (1.3),
 	lxtrack.cfg (1.6), makefile (1.2), msg.cc (1.2), pkt.cc (1.5):
 	mainly some fixes. most important is the pkt code, which finally
 	works correctly, btw, bounce won't work anymore
 
-1998-12-05 Saturday 00:48  mm
+1998-12-04 Friday 15:48  mm
 
 	* pkt.cc (1.3): yet another bug bites the dust
 
-1998-11-30 Monday 22:21  mm
+1998-11-30 Monday 13:21  mm
 
 	* ACTIONS (1.2), CHANGELOG (1.4), action.cc (1.2), area.cc (1.2),
 	lxtrack.cfg (1.4), mask.cc (1.2), mask.h (1.2), pkt.cc (1.2): fixed
 	BIG bug in packmail
 
-1998-11-27 Friday 19:30  mm
+1998-11-27 Friday 10:30  mm
 
 	* BUGS (1.2), CHANGELOG (1.3), ftnaddr.cc (1.3), lxtrack.cfg (1.3):
 	fixed big bug in config fixed little bug in config-parser
 
-1998-11-25 Wednesday 20:34  mm
+1998-11-25 Wednesday 11:34  mm
 
 	* CHANGELOG (1.2), Makefile (1.2), Makefile.dbg (1.2), Makefile.rel
 	(1.2), carc.log (1.2), ftnaddr.cc (1.2), lxtrack.cfg (1.2): fixed
 	some bugs
 
-1998-11-22 Sunday 22:11  mm
+1998-11-22 Sunday 13:11  mm
 
 	* lxtrack.1.gz (1.1), ACTIONS (1.1): Initial revision
 
-1998-11-21 Saturday 21:24  mm
+1998-11-21 Saturday 12:24  mm
 
 	* carc.log (1.1), pkt.cc (1.1), pkt.h (1.1): Initial revision
 
-1998-11-19 Thursday 18:19  mm
+1998-11-19 Thursday 09:19  mm
 
 	* COPYING (1.1), CHANGELOG (1.1), INSTALL (1.1), global.cc (1.1),
 	makefile (1.1): Initial revision
 
-1998-11-18 Wednesday 22:19  mm
+1998-11-18 Wednesday 13:19  mm
 
 	* Makefile.rel (1.1), README (1.1): Initial revision
 
-1998-11-17 Tuesday 18:47  mm
+1998-11-17 Tuesday 09:47  mm
 
 	* Makefile (1.1), Makefile.dbg (1.1), action.cc (1.1), action.h
 	(1.1), area.cc (1.1), area.h (1.1), bastypes.h (1.1), bounce.txt
