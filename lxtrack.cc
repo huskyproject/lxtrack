@@ -3,7 +3,11 @@
 #else
 #include <iostream.h>
 #endif
+#ifdef __GNUC__
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 #include <string>
 
 #include "area.h"

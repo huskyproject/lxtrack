@@ -24,7 +24,7 @@ class CFtnAddr
 
 	public:					/*-- constructors ---*/
 		CFtnAddr();
-		CFtnAddr(CFtnAddr & in);
+		CFtnAddr(const CFtnAddr & in);
 		CFtnAddr(string str);
 
 	public:					/*--- destructors ---*/

@@ -29,7 +29,7 @@ CFtnAddr::CFtnAddr()
 	domain="";
 }
 
-CFtnAddr::CFtnAddr(CFtnAddr & in)
+CFtnAddr::CFtnAddr(const CFtnAddr & in)
 {
 	// initialize with values from in
 	zone=in.zone;

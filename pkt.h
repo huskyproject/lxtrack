@@ -1,7 +1,11 @@
 #ifndef _PKT_H_
 #define _PKT_H_
 #include <string>
+#ifndef IS_NOTGCC
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 #include "mask.h"
 #include "msg.h"
 #include "ftnaddr.h"

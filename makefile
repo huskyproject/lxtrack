@@ -16,7 +16,8 @@ OBJS=	action.o  \
 	lxtrack.o \
 	mask.o    \
 	msg.o     \
-	pkt.o
+	pkt.o     \
+        strsep.o
 
 .cc.o:
 	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -c $< -o $@

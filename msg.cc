@@ -4,8 +4,13 @@
 #include <iostream.h>
 #endif
 #include <string>
+#ifdef __GNUC__
 #include <cstring>
 #include <cstdio>
+#else
+#include <string.h>
+#include <stdio.h>
+#endif
 #include <time.h>
 #include "msg.h"
 
@@ -99,17 +104,17 @@ int CMsg::Write()
 	
 	xmsg.replyto=0;
 
-	strcpy(subj, (s_Subject.c_str()));
-	strcpy(from, (s_From.c_str()));
-	strcpy(to,(s_To.c_str()));
+	strcpy((char *)subj, (s_Subject.c_str()));
+	strcpy((char *)from, (s_From.c_str()));
+	strcpy((char *)to,(s_To.c_str()));
 	if (sent)
 		xmsg.attr=MSGPRIVATE|MSGLOCAL|MSGSENT;
 	else
 		xmsg.attr=MSGPRIVATE|MSGLOCAL;
 
-	strcpy(xmsg.from,from);
-        strcpy(xmsg.to,to);
-        strcpy(xmsg.subj,subj);
+	strcpy((char *)xmsg.from,(char *)from);
+        strcpy((char *)xmsg.to,(char *)to);
+        strcpy((char *)xmsg.subj,(char *)subj);
 	xmsg.orig.zone=F_From.zone;
         xmsg.orig.net=F_From.net;
         xmsg.orig.node=F_From.node;
@@ -121,7 +126,7 @@ int CMsg::Write()
 	xmsg.attr=d_Attr;
 	i_TextLen=s_MsgText.length()+1;
 	i_CtrlLen=s_Ctrl.length()+1;
-	MsgWriteMsg(hmsg, 0, &xmsg, const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>(s_MsgText.c_str())), i_TextLen, i_TextLen+i_CtrlLen, i_CtrlLen, const_cast<char*>(s_Ctrl.c_str()));
+	MsgWriteMsg(hmsg, 0, &xmsg, const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>(s_MsgText.c_str())), i_TextLen, i_TextLen+i_CtrlLen, i_CtrlLen, (byte *)const_cast<char*>(s_Ctrl.c_str()));
 	return 0;
 }
 

@@ -2,7 +2,11 @@
 #define _AREA_H_
 #include <vector>
 #include <string>
+#ifdef IS_NOTGCC
+#include <stdio.h>
+#else
 #include <cstdio>
+#endif
 #include "mask.h"
 #include "op.h"
 #include "action.h"

@@ -1,7 +1,13 @@
 #include <string>
+#ifdef __GNUC__
 #include <cstring>
 #include <cstdio>
+#else
+#include <string.h>
+#include <stdio.h>
+#endif
 #include "config.h"
+#include "strsep.h"
 #include "mask.h"
 	
 
@@ -27,8 +33,8 @@ string CConfig::getLine()
 	line = new char[256];
 	if (fgets(line, 256, cfgFile)==NULL) return "\n";
 	for (;counter<strlen(line);counter++) if (line[counter]==92) line[counter]='\\';
-	if (line[0]==' ') strsep(&line, " ");
-	line = strsep(&line, "\n");
+	if (line[0]==' ') strseparate(&line, " ");
+	line = strseparate(&line, "\n");
 	order = line;
 	delete [] line;
 	return order;

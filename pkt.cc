@@ -1,6 +1,9 @@
 #include <string>
+#ifdef __GNUC__
 #include <cstdio>
-
+#else
+#include <stdio.h>
+#endif
 #include "global.h"
 #include "pkt.h"
 #include "version.h"

@@ -3,9 +3,17 @@
 #else
 #include <iostream.h>
 #endif
+#ifdef __GNUC__
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 #include <string>
 #include <time.h>
+extern "C"
+{
+#include "../smapi/msgapi.h"
+}
 #include "ftnaddr.h"
 #include "mask.h"
 #include "area.h"

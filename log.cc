@@ -3,7 +3,11 @@
 #else
 #include <iostream.h>
 #endif
+#ifdef __GNUC__
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 #include <time.h>
 #include "log.h"
 #include "version.h"

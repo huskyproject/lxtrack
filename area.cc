@@ -4,7 +4,11 @@
 #else
 #include <iostream.h>
 #endif
+#ifdef __GNUC__
 #include <cstring>
+#else
+#include <string.h>
+#endif
 #include "msg.h"
 #include "area.h"
 #include "config.h"

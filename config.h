@@ -1,9 +1,15 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
+#ifdef __GNUC__
 #include <string>
 #include <cstdio>
 #include <cstdlib>
+#else
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#endif
 #include <vector>
 #include "area.h"
 #include "mask.h"

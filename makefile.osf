@@ -1,0 +1,39 @@
+# Makefile for DEC Unix with vendor Cxx Version 6.0
+
+CC=cxx
+CFLAGS=
+CDEFS=	-DUNIX -DCONFIGDIR=\"lxtrack.cfg\" -DIS_NOTGCC
+# -g cannot be combined with -O3, so rebuild if you make a release!
+COPT=-g
+LOPT=-L/home/fido/lib
+
+TARGET= lxtrack
+
+SMAPI=smapiunix
+
+OBJS=	action.o  \
+	area.o    \
+	config.o  \
+	ftnaddr.o \
+	global.o  \
+	log.o     \
+	lxtrack.o \
+	mask.o    \
+	msg.o     \
+	pkt.o     \
+        strsep.o  
+
+.cc.o:
+	$(CC) $(CFLAGS) $(CDEFS) $(LOPT) $(COPT) -c $< -o $@
+
+debug: $(OBJS)
+	$(CC) $(OBJS) $(LOPT) -l$(SMAPI) -g -o lxtdbg
+
+release: $(OBJS)
+	$(CC) $(OBJS) $(LOPT) -l$(SMAPI) -s -o lxtrack
+
+clean:
+	rm *.o 
+
+distclean:
+	rm *.o core lxtdbg lxtrack

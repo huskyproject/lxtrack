@@ -1,7 +1,11 @@
 #ifndef _LOG_H_
 #define _LOG_H_
 
+#ifdef __GNUC__
 #include <cstdio>
+#else
+#include <stdio.h>
+#endif
 #include <string>
 #include <time.h>
 

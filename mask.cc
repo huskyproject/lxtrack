@@ -1,4 +1,5 @@
 #include <string>
+#include "strsep.h"
 #include "mask.h"
 
 CMask::CMask()
@@ -47,12 +48,12 @@ CMask& CMask::operator=(const string& str)
 	char *buf;
 	buf = new char[128];
 	buf=const_cast<char*>(str.c_str());
-	s_Sender=strsep(&buf, ",");
-	F_From=strsep(&buf, ",");
-	s_Recipient=strsep(&buf, ",");
-	F_To=strsep(&buf, ",");
-	s_Subject=strsep(&buf, ",");
-	strsep(&buf,",");
+	s_Sender=strseparate(&buf, ",");
+	F_From=strseparate(&buf, ",");
+	s_Recipient=strseparate(&buf, ",");
+	F_To=strseparate(&buf, ",");
+	s_Subject=strseparate(&buf, ",");
+	strseparate(&buf,",");
 	delete [] buf;
 	return (*this);
 }
